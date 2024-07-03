@@ -14,6 +14,7 @@
 		BC3D1B3B2C35CFF6001937E4 /* PostNordTracking_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B3A2C35CFF6001937E4 /* PostNordTracking_2Tests.swift */; };
 		BC3D1B452C35CFF6001937E4 /* PostNordTracking_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B442C35CFF6001937E4 /* PostNordTracking_2UITests.swift */; };
 		BC3D1B472C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B462C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift */; };
+		BC3D1B542C35D0CC001937E4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B532C35D0CB001937E4 /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BC3D1B402C35CFF6001937E4 /* PostNordTracking-2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PostNordTracking-2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3D1B442C35CFF6001937E4 /* PostNordTracking_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNordTracking_2UITests.swift; sourceTree = "<group>"; };
 		BC3D1B462C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNordTracking_2UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BC3D1B532C35D0CB001937E4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		BC3D1B282C35CFF3001937E4 /* PostNordTracking-2 */ = {
 			isa = PBXGroup;
 			children = (
+				BC3D1B532C35D0CB001937E4 /* APIManager.swift */,
 				BC3D1B292C35CFF3001937E4 /* PostNordTracking_2App.swift */,
 				BC3D1B2B2C35CFF3001937E4 /* ContentView.swift */,
 				BC3D1B2D2C35CFF6001937E4 /* Assets.xcassets */,
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC3D1B542C35D0CC001937E4 /* APIManager.swift in Sources */,
 				BC3D1B2C2C35CFF3001937E4 /* ContentView.swift in Sources */,
 				BC3D1B2A2C35CFF3001937E4 /* PostNordTracking_2App.swift in Sources */,
 			);
