@@ -5,11 +5,14 @@
 //  Created by Mathias Schindler on 27/06/2024.
 //
 
+// Test tracking-ID: 00370730254738217676
+
 import SwiftUI
 
 struct ContentView: View {
-    @State private var inputReferenceNumber: String = ""
     @State private var selectedLanguageCode = "en"
+    @State private var recentSearches: [String] = UserDefaults.standard.stringArray(forKey: "RecentSearches") ?? []
+    @State private var inputReferenceNumber: String = ""
     
     var body: some View {
         TabView {
@@ -23,6 +26,37 @@ struct ContentView: View {
                             Image(systemName: "plus")
                         }
                         .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .padding(.bottom)
+                    
+                    // Recent Searches List
+                    VStack(alignment: .leading) {
+                        Text("Recent Searches")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                        
+                        ScrollView {
+                            ForEach(recentSearches, id: \.self) { search in
+                                NavigationLink(destination: TrackingView(inputReferenceNumber: search, selectedLanguageCode: selectedLanguageCode)) {
+                                    VStack(alignment: .leading) {
+                                        Text(search)
+                                            .padding(.vertical, 8)
+                                        Divider()
+                                    }
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            
+                            // Button to clear recent searches
+                            Button(action: {
+                                clearRecentSearches()
+                            }) {
+                                Text("Clear Recent Searches")
+                                    .foregroundColor(.red)
+                            }
+                            .padding()
+                            .buttonStyle(BorderedButtonStyle())
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -40,6 +74,34 @@ struct ContentView: View {
                 Label("Settings", systemImage: "gear")
             }
         }
+        .onChange(of: inputReferenceNumber) {
+            // Add the new search to recent searches list
+            updateRecentSearches(inputReferenceNumber)
+            saveRecentSearches()
+        }
+    }
+    
+    private func updateRecentSearches(_ newSearch: String) {
+        // Ensure no duplicates are added
+        if recentSearches.contains(newSearch) {
+            // Move existing search to the top
+            if let index = recentSearches.firstIndex(of: newSearch) {
+                recentSearches.remove(at: index)
+                recentSearches.insert(newSearch, at: 0)
+            }
+        } else {
+            // Add new search at the top
+            recentSearches.insert(newSearch, at: 0)
+        }
+    }
+    
+    private func saveRecentSearches() {
+        UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
+    }
+    
+    private func clearRecentSearches() {
+        recentSearches.removeAll()
+        saveRecentSearches()
     }
 }
 
@@ -48,22 +110,43 @@ struct TrackingView: View {
     let selectedLanguageCode: String
     
     @State private var isLoading = true
-    @State private var shipmentDetails: String = ""
+    @State private var shipmentEvents: [ShipmentEvent] = []
+    @State private var errorMessage: String?
     
     var body: some View {
         VStack {
             if isLoading {
                 ProgressView()
-            } else {
+            } else if !shipmentEvents.isEmpty {
                 ScrollView {
-                    Text("Shipment details for \(inputReferenceNumber)")
-                        .font(.headline)
-                        .padding(.bottom, 8)
-                    
-                    Text(shipmentDetails)
-                        .font(.system(.body))
+                    VStack(alignment: .leading) {
+                        Text("Shipment details for \(inputReferenceNumber)")
+                            .font(.headline)
+                            .padding(.bottom, 8)
+                        Divider()
+                        
+                        ForEach(shipmentEvents) { event in
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(event.eventTime)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                
+                                Text("\(event.locationName), \(event.locationCountry)")
+                                    .font(.subheadline)
+                                
+                                Text(event.eventDescription)
+                                    .font(.body)
+                            }
+                            .padding(.vertical, 8)
+                            Divider()
+                        }
+                    }
+                    .padding()
                 }
-                .padding()
+            } else {
+                Text("No shipment data found.")
+                    .foregroundColor(.gray)
+                    .padding()
             }
         }
         .navigationTitle("Tracking Details")
@@ -73,18 +156,12 @@ struct TrackingView: View {
                 switch result {
                 case .success(let events):
                     DispatchQueue.main.async {
-                        var details = ""
-                        for event in events {
-                            let eventTime = event.eventTime ?? "N/A"
-                            let eventDescription = event.eventDescription ?? "N/A"
-                            details += "\(eventTime)\n\(eventDescription)\n\n"
-                        }
-                        self.shipmentDetails = details
+                        self.shipmentEvents = events
                         self.isLoading = false
                     }
-                case .failure(let error):
+                case .failure(_):
                     DispatchQueue.main.async {
-                        self.shipmentDetails = "Failed to fetch shipment details: \(error.localizedDescription)"
+                        self.shipmentEvents = []
                         self.isLoading = false
                     }
                 }
