@@ -10,20 +10,25 @@ import SwiftUI
 struct LanguageSelectionView: View {
     @Binding var selectedLanguageCode: String
 
-    let languages = ["English": "en", "Danish": "da"]
+    let languages = ["English":"en",
+                     "Danish":"da",
+                     "Swedish":"sv",
+                     "Norwegian":"no",
+                     "Finnish":"fi" ]
+    let languageOrder = ["English", "Danish", "Swedish", "Norwegian", "Finnish"] // Necessary for order maintained after build.
 
     var body: some View {
         VStack {
             Text("Select Language")
             Picker(selection: $selectedLanguageCode, label: Text("Select Language")) {
-                ForEach(languages.sorted(by: <), id: \.value) { name, code in
-                    Text(name).tag(code)
+                ForEach(languageOrder, id: \.self) { key in
+                    Text(key).tag(languages[key]!)
                 }
             }
             .pickerStyle(WheelPickerStyle())
             .padding()
         }
-        .navigationTitle("Language Settings")
+        .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
