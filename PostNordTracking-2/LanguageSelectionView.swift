@@ -20,7 +20,7 @@ struct LanguageSelectionView: View {
     var body: some View {
         VStack {
             Text("Select Language")
-            Picker(selection: $selectedLanguageCode, label: Text("Select Language")) {
+            Picker(selection: $selectedLanguageCode, label: Text("Select Language for Tracking Info")) {
                 ForEach(languageOrder, id: \.self) { key in
                     Text(key).tag(languages[key]!)
                 }
