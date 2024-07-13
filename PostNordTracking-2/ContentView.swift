@@ -83,6 +83,9 @@ struct ContentView: View {
                 .navigationDestination(isPresented: $isTrackingViewActive) {
                     TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
                     .onDisappear {
+                        //Only update recent searches after TrackingView closes
+                        updateRecentSearches(trackingViewSearchId)
+                        
                         // Reset manualSearchId and trackingViewSearchId after closing trackingView
                         manualSearchId = ""
                         trackingViewSearchId = ""
@@ -109,8 +112,6 @@ struct ContentView: View {
         } else if !tappedRecentSearchId.isEmpty {
             trackingViewSearchId = tappedRecentSearchId
         }
-                
-        updateRecentSearches(trackingViewSearchId)
         isTrackingViewActive = true
     }
     
