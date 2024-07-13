@@ -5,7 +5,7 @@
 //  Created by Mathias Schindler on 27/06/2024.
 //
 
-// Test tracking-ID: 00370730254738217676
+// Test tracking-ID: 00370730254738217676 | 00370733742650018077
 
 import SwiftUI
 
@@ -48,14 +48,16 @@ struct ContentView: View {
                             }
                             
                             // Button to clear recent searches
-                            Button(action: {
-                                clearRecentSearches()
-                            }) {
-                                Text("Clear Recent Searches")
-                                    .foregroundColor(.red)
+                            if !recentSearches.isEmpty {
+                                Button(role: .destructive, action: {
+                                        clearRecentSearches()
+                                    }) {
+                                        Label("Clear Recent Searches", systemImage: "trash")
+                                }
+                                .padding()
+                            } else {
+                                
                             }
-                            .padding()
-                            .buttonStyle(BorderedButtonStyle())
                         }
                     }
                 }
