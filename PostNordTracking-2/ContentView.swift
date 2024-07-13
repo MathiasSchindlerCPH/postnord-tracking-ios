@@ -10,24 +10,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedLanguageCode = "en"
     @State private var recentSearches: [String] = UserDefaults.standard.stringArray(forKey: "RecentSearches") ?? []
-    @State private var inputReferenceNumber: String = ""
+    
+    @State private var selectedLanguageCode = "en"
     @State private var isTrackingViewActive: Bool = false
+    
+    @State private var manualSearchId: String = ""
+    @State private var tappedRecentSearchId: String = ""
+    @State private var trackingViewSearchId: String = ""
     
     var body: some View {
         TabView {
             NavigationStack {
                 VStack {
                     HStack {
-                        TextField("Enter tracking ID", text: $inputReferenceNumber)
+                        TextField("Enter tracking ID", text: $manualSearchId)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
                         Button(action: {
-                            if !inputReferenceNumber.isEmpty {
-                                updateRecentSearches(inputReferenceNumber)
-                                saveRecentSearches()
-                                isTrackingViewActive = true
+                            if !manualSearchId.isEmpty {
+                                navigateToTrackingView(search: manualSearchId)
                             }
                         }) {
                             Image(systemName: "plus")
@@ -37,42 +39,55 @@ struct ContentView: View {
                     .padding(.bottom)
                     
                     // Recent Searches List
-                    VStack(alignment: .leading) {
-                        Text("Recent Searches")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        
-                        ScrollView {
-                            ForEach(recentSearches, id: \.self) { search in
-                                NavigationLink(destination: TrackingView(inputReferenceNumber: search, selectedLanguageCode: selectedLanguageCode)) {
-                                    VStack(alignment: .leading) {
-                                        Text(search)
-                                            .padding(.vertical, 8)
-                                        Divider()
-                                    }
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
+                    if !recentSearches.isEmpty {
+                        VStack(alignment: .leading) {
+                            Text("Recent Searches")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
                             
-                            // Button to clear recent searches
-                            if !recentSearches.isEmpty {
-                                Button(role: .destructive, action: {
-                                        clearRecentSearches()
+                            ScrollView {
+                                ForEach(recentSearches, id: \.self) { search in
+                                    Button(action: {
+                                        tappedRecentSearchId = search
+                                        navigateToTrackingView(search: tappedRecentSearchId)
                                     }) {
-                                        Label("Clear Recent Searches", systemImage: "trash")
+                                        VStack(alignment: .leading) {
+                                            Text(search)
+                                                .padding(.vertical, 8)
+                                            Divider()
+                                        }
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                                
+                                // Button to clear recent searches
+                                Button(role: .destructive, action: {
+                                    clearRecentSearches()
+                                }) {
+                                    Label("Clear Recent Searches", systemImage: "trash")
                                 }
                                 .padding()
-                            } else {
-                                
                             }
                         }
+                    } else {
+                        VStack {
+                            Text("Recent searches will appear here")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("Post Tracking")
                 .navigationDestination(isPresented: $isTrackingViewActive) {
-                    TrackingView(inputReferenceNumber: inputReferenceNumber, selectedLanguageCode: selectedLanguageCode)
-                  }
+                    TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
+                    .onDisappear {
+                        // Reset manualSearchId and trackingViewSearchId after closing trackingView
+                        manualSearchId = ""
+                        trackingViewSearchId = ""
+                    }
+                }
                 .padding()
             }
             .tabItem {
@@ -88,6 +103,17 @@ struct ContentView: View {
         }
     }
     
+    private func navigateToTrackingView(search: String) {
+        if !manualSearchId.isEmpty {
+            trackingViewSearchId = manualSearchId
+        } else if !tappedRecentSearchId.isEmpty {
+            trackingViewSearchId = tappedRecentSearchId
+        }
+                
+        updateRecentSearches(trackingViewSearchId)
+        isTrackingViewActive = true
+    }
+    
     private func updateRecentSearches(_ newSearch: String) {
         // Ensure no duplicates are added
         if recentSearches.contains(newSearch) {
@@ -100,6 +126,7 @@ struct ContentView: View {
             // Add new search at the top
             recentSearches.insert(newSearch, at: 0)
         }
+        saveRecentSearches()
     }
     
     private func saveRecentSearches() {
@@ -108,7 +135,7 @@ struct ContentView: View {
     
     private func clearRecentSearches() {
         recentSearches.removeAll()
-        saveRecentSearches()
+        saveRecentSearches() // This call also clears recentSeaches from UserDefaults (bc of saveRecentSearches logic)
     }
 }
 
