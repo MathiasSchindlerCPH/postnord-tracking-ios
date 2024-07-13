@@ -13,16 +13,23 @@ struct ContentView: View {
     @State private var selectedLanguageCode = "en"
     @State private var recentSearches: [String] = UserDefaults.standard.stringArray(forKey: "RecentSearches") ?? []
     @State private var inputReferenceNumber: String = ""
+    @State private var isTrackingViewActive: Bool = false
     
     var body: some View {
         TabView {
-            NavigationView {
+            NavigationStack {
                 VStack {
                     HStack {
                         TextField("Enter tracking ID", text: $inputReferenceNumber)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        NavigationLink(destination: TrackingView(inputReferenceNumber: inputReferenceNumber, selectedLanguageCode: selectedLanguageCode)) {
+                        Button(action: {
+                            if !inputReferenceNumber.isEmpty {
+                                updateRecentSearches(inputReferenceNumber)
+                                saveRecentSearches()
+                                isTrackingViewActive = true
+                            }
+                        }) {
                             Image(systemName: "plus")
                         }
                         .buttonStyle(BorderlessButtonStyle())
@@ -63,6 +70,9 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("Post Tracking")
+                .navigationDestination(isPresented: $isTrackingViewActive) {
+                    TrackingView(inputReferenceNumber: inputReferenceNumber, selectedLanguageCode: selectedLanguageCode)
+                  }
                 .padding()
             }
             .tabItem {
@@ -75,11 +85,6 @@ struct ContentView: View {
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
-        }
-        .onChange(of: inputReferenceNumber) {
-            // Add the new search to recent searches list
-            updateRecentSearches(inputReferenceNumber)
-            saveRecentSearches()
         }
     }
     
