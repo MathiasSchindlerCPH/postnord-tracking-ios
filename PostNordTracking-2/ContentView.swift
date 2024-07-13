@@ -116,17 +116,16 @@ struct ContentView: View {
     }
     
     private func updateRecentSearches(_ newSearch: String) {
-        // Ensure no duplicates are added
-        if recentSearches.contains(newSearch) {
-            // Move existing search to the top
-            if let index = recentSearches.firstIndex(of: newSearch) {
-                recentSearches.remove(at: index)
-                recentSearches.insert(newSearch, at: 0)
-            }
-        } else {
-            // Add new search at the top
-            recentSearches.insert(newSearch, at: 0)
+        // Trim leading and trailing whitespace and exit function early if trimmed search is empty/whitespaces/new lines
+        let trimmedSearch = newSearch.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedSearch.isEmpty else { return }
+        
+        // Remove existing search if present
+        if let index = recentSearches.firstIndex(of: trimmedSearch) {
+            recentSearches.remove(at: index)
         }
+        // Add new search at the top
+        recentSearches.insert(trimmedSearch, at: 0)
         saveRecentSearches()
     }
     
