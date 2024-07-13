@@ -46,9 +46,12 @@ struct TrackingView: View {
                     .padding()
                 }
             } else {
-                Text("No shipment data found.")
-                    .foregroundColor(.gray)
-                    .padding()
+                VStack {
+                    Text("No shipment data found for tracking ID\n\(inputReferenceNumber).")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .navigationTitle("Tracking Details")
