@@ -41,12 +41,34 @@ struct ContentView: View {
                     // Recent Searches List
                     if !recentSearches.isEmpty {
                         VStack(alignment: .leading) {
-                            Button(role: .destructive, action: {
-                                clearRecentSearches()
-                            }) {
-                                Label("Clear Recent Searches", systemImage: "trash")
+                            Text("Recent Searches")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            
+                            ScrollView {
+                                ForEach(recentSearches.indices.reversed(), id: \.self) { index in
+                                    if let parcelId = recentSearches[index]["parcelId"] as? String {
+                                        Button(action: {
+                                            tappedRecentSearchId = parcelId
+                                            navigateToTrackingView(search: tappedRecentSearchId)
+                                        }) {
+                                            VStack(alignment: .leading) {
+                                                Text(parcelId)
+                                                    .padding(.vertical, 8)
+                                                Divider()
+                                            }
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                             
+                                Button(role: .destructive, action: {
+                                    clearRecentSearches()
+                                }) {
+                                    Label("Clear Recent Searches", systemImage: "trash")
+                                }
+                                .padding()
                             }
-                            .padding()
                         }
                     } else {
                         VStack {
@@ -63,7 +85,7 @@ struct ContentView: View {
                     TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
                     .onDisappear {
                         //Only update recent searches after TrackingView closes
-                        saveRecentSearch(searchId: manualSearchId)
+                        saveRecentSearch(searchId: trackingViewSearchId)
                         
                         // Reset manualSearchId and trackingViewSearchId after closing trackingView
                         manualSearchId = ""
@@ -95,30 +117,26 @@ struct ContentView: View {
     }
     
     private func saveRecentSearch(searchId: String) {
-        print("Previous recent searches: \(recentSearches)")
-        
+        let trimmedSearchId = searchId.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedSearchId.isEmpty else { return }
+
         let searchedOn = Int(Date().timeIntervalSince1970)
         
-        // Check if searchId is already in recentSearches
-        let searchExists = recentSearches.contains { $0["parcelId"] as? String == searchId }
-        
-        if !searchExists {
-            let newSearch: [String: Any] = ["parcelId": searchId, "lastSearchedOn": searchedOn]
-            recentSearches.append(newSearch)
-            UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
-            print("Updated recent searches: \(recentSearches)")
-        } else {
-            print("No new search saved. recentSearches already included last search.")
+        // Check if searchId exists in recentSearches and remove if it does (to append at the bottom later)
+        if recentSearches.contains(where: { $0["parcelId"] as? String == trimmedSearchId }) {
+            recentSearches.removeAll { $0["parcelId"] as? String == trimmedSearchId }
         }
+        
+        // Save new search to recentSearches
+        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "lastSearchedOn": searchedOn]
+        recentSearches.append(newSearch)
+        UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
     
     private func clearRecentSearches() {
-        print("Previous recent searches: \(recentSearches)")
-        
         if !recentSearches.isEmpty {
             recentSearches.removeAll()
             UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
-            print("Recent searches cleared. Current recent searches state variable: \(recentSearches)")
         }
     }
 }
