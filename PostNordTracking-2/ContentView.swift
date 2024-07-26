@@ -10,14 +10,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var recentSearches: [String] = UserDefaults.standard.stringArray(forKey: "RecentSearches") ?? []
-    
     @State private var selectedLanguageCode = "en"
     @State private var isTrackingViewActive: Bool = false
     
     @State private var manualSearchId: String = ""
     @State private var tappedRecentSearchId: String = ""
     @State private var trackingViewSearchId: String = ""
+    
+    @State private var recentSearches: [[String: Any]] = UserDefaults.standard.array(forKey: "RecentSearches") as? [[String: Any]] ?? []
     
     var body: some View {
         TabView {
@@ -39,7 +39,23 @@ struct ContentView: View {
                     .padding(.bottom)
                     
                     // Recent Searches List
-                    
+                    if !recentSearches.isEmpty {
+                        VStack(alignment: .leading) {
+                            Button(role: .destructive, action: {
+                                clearRecentSearches()
+                            }) {
+                                Label("Clear Recent Searches", systemImage: "trash")
+                            }
+                            .padding()
+                        }
+                    } else {
+                        VStack {
+                            Text("Recent searches will appear here")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("Post Tracking")
@@ -47,7 +63,7 @@ struct ContentView: View {
                     TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
                     .onDisappear {
                         //Only update recent searches after TrackingView closes
-                        updateRecentSearches(trackingViewSearchId)
+                        saveRecentSearch(searchId: manualSearchId)
                         
                         // Reset manualSearchId and trackingViewSearchId after closing trackingView
                         manualSearchId = ""
@@ -78,27 +94,32 @@ struct ContentView: View {
         isTrackingViewActive = true
     }
     
-    private func updateRecentSearches(_ newSearch: String) {
-        // Trim leading and trailing whitespace and exit function early if trimmed search is empty/whitespaces/new lines
-        let trimmedSearch = newSearch.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedSearch.isEmpty else { return }
+    private func saveRecentSearch(searchId: String) {
+        print("Previous recent searches: \(recentSearches)")
         
-        // Remove existing search if present
-        if let index = recentSearches.firstIndex(of: trimmedSearch) {
-            recentSearches.remove(at: index)
+        let searchedOn = Int(Date().timeIntervalSince1970)
+        
+        // Check if searchId is already in recentSearches
+        let searchExists = recentSearches.contains { $0["parcelId"] as? String == searchId }
+        
+        if !searchExists {
+            let newSearch: [String: Any] = ["parcelId": searchId, "lastSearchedOn": searchedOn]
+            recentSearches.append(newSearch)
+            UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
+            print("Updated recent searches: \(recentSearches)")
+        } else {
+            print("No new search saved. recentSearches already included last search.")
         }
-        // Add new search at the top
-        recentSearches.insert(trimmedSearch, at: 0)
-        saveRecentSearches()
-    }
-    
-    private func saveRecentSearches() {
-        UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
     
     private func clearRecentSearches() {
-        recentSearches.removeAll()
-        saveRecentSearches() // This call also clears recentSeaches from UserDefaults (bc of saveRecentSearches logic)
+        print("Previous recent searches: \(recentSearches)")
+        
+        if !recentSearches.isEmpty {
+            recentSearches.removeAll()
+            UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
+            print("Recent searches cleared. Current recent searches state variable: \(recentSearches)")
+        }
     }
 }
 
