@@ -5,7 +5,7 @@
 //  Created by Mathias Schindler on 27/06/2024.
 //
 
-// Test tracking-ID: 00370730254738217676 | 00370733742650018077
+// Test tracking-ID: 00370730254738217676 | 00370733742650018077 | 00157128965186828922
 
 import SwiftUI
 
@@ -18,6 +18,12 @@ struct ContentView: View {
     @State private var trackingViewSearchId: String = ""
     
     @State private var recentSearches: [[String: Any]] = UserDefaults.standard.array(forKey: "RecentSearches") as? [[String: Any]] ?? []
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH.mm"
+        return formatter
+    }
     
     var body: some View {
         TabView {
@@ -42,19 +48,26 @@ struct ContentView: View {
                     if !recentSearches.isEmpty {
                         VStack(alignment: .leading) {
                             Text("Recent Searches")
-                                .font(.subheadline)
+                                .font(.headline)
                                 .foregroundColor(.gray)
                             
                             ScrollView {
                                 ForEach(recentSearches.indices.reversed(), id: \.self) { index in
-                                    if let parcelId = recentSearches[index]["parcelId"] as? String {
+                                    if let parcelId = recentSearches[index]["parcelId"] as? String,
+                                       let lastSearchedOn = recentSearches[index]["lastSearchedOn"] as? Int {
+                                        
                                         Button(action: {
                                             tappedRecentSearchId = parcelId
                                             navigateToTrackingView(search: tappedRecentSearchId)
                                         }) {
                                             VStack(alignment: .leading) {
                                                 Text(parcelId)
-                                                    .padding(.vertical, 8)
+                                                    .padding(.top, 6)
+                                                    .padding(.bottom, 2)
+                                                Text(formatTimestamp(lastSearchedOn))
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                                    .padding(.bottom, 6)
                                                 Divider()
                                             }
                                         }
@@ -138,6 +151,11 @@ struct ContentView: View {
             recentSearches.removeAll()
             UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
         }
+    }
+    
+    private func formatTimestamp(_ timestamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        return dateFormatter.string(from: date)
     }
 }
 
