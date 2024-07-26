@@ -39,44 +39,7 @@ struct ContentView: View {
                     .padding(.bottom)
                     
                     // Recent Searches List
-                    if !recentSearches.isEmpty {
-                        VStack(alignment: .leading) {
-                            Text("Recent Searches")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                            
-                            ScrollView {
-                                ForEach(recentSearches, id: \.self) { search in
-                                    Button(action: {
-                                        tappedRecentSearchId = search
-                                        navigateToTrackingView(search: tappedRecentSearchId)
-                                    }) {
-                                        VStack(alignment: .leading) {
-                                            Text(search)
-                                                .padding(.vertical, 8)
-                                            Divider()
-                                        }
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                                
-                                // Button to clear recent searches
-                                Button(role: .destructive, action: {
-                                    clearRecentSearches()
-                                }) {
-                                    Label("Clear Recent Searches", systemImage: "trash")
-                                }
-                                .padding()
-                            }
-                        }
-                    } else {
-                        VStack {
-                            Text("Recent searches will appear here")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
+                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("Post Tracking")
