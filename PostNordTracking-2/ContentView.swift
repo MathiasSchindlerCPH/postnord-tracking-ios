@@ -5,19 +5,25 @@
 //  Created by Mathias Schindler on 27/06/2024.
 //
 
-// Test tracking-ID: 00370730254738217676 | 00370733742650018077
+// Test tracking-ID: 00370730254738217676 | 00370733742650018077 | 00157128965186828922
 
 import SwiftUI
 
 struct ContentView: View {
-    @State private var recentSearches: [String] = UserDefaults.standard.stringArray(forKey: "RecentSearches") ?? []
-    
     @State private var selectedLanguageCode = "en"
     @State private var isTrackingViewActive: Bool = false
     
     @State private var manualSearchId: String = ""
     @State private var tappedRecentSearchId: String = ""
     @State private var trackingViewSearchId: String = ""
+    
+    @State private var recentSearches: [[String: Any]] = UserDefaults.standard.array(forKey: "RecentSearches") as? [[String: Any]] ?? []
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH.mm"
+        return formatter
+    }
     
     var body: some View {
         TabView {
@@ -42,25 +48,33 @@ struct ContentView: View {
                     if !recentSearches.isEmpty {
                         VStack(alignment: .leading) {
                             Text("Recent Searches")
-                                .font(.subheadline)
+                                .font(.headline)
                                 .foregroundColor(.gray)
                             
                             ScrollView {
-                                ForEach(recentSearches, id: \.self) { search in
-                                    Button(action: {
-                                        tappedRecentSearchId = search
-                                        navigateToTrackingView(search: tappedRecentSearchId)
-                                    }) {
-                                        VStack(alignment: .leading) {
-                                            Text(search)
-                                                .padding(.vertical, 8)
-                                            Divider()
+                                ForEach(recentSearches.indices.reversed(), id: \.self) { index in
+                                    if let parcelId = recentSearches[index]["parcelId"] as? String,
+                                       let lastSearchedOn = recentSearches[index]["lastSearchedOn"] as? Int {
+                                        
+                                        Button(action: {
+                                            tappedRecentSearchId = parcelId
+                                            navigateToTrackingView(search: tappedRecentSearchId)
+                                        }) {
+                                            VStack(alignment: .leading) {
+                                                Text(parcelId)
+                                                    .padding(.top, 6)
+                                                    .padding(.bottom, 2)
+                                                Text(formatTimestamp(lastSearchedOn))
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                                    .padding(.bottom, 6)
+                                                Divider()
+                                            }
                                         }
+                                        .buttonStyle(PlainButtonStyle())
                                     }
-                                    .buttonStyle(PlainButtonStyle())
                                 }
-                                
-                                // Button to clear recent searches
+                             
                                 Button(role: .destructive, action: {
                                     clearRecentSearches()
                                 }) {
@@ -84,7 +98,7 @@ struct ContentView: View {
                     TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
                     .onDisappear {
                         //Only update recent searches after TrackingView closes
-                        updateRecentSearches(trackingViewSearchId)
+                        saveRecentSearch(searchId: trackingViewSearchId)
                         
                         // Reset manualSearchId and trackingViewSearchId after closing trackingView
                         manualSearchId = ""
@@ -115,27 +129,33 @@ struct ContentView: View {
         isTrackingViewActive = true
     }
     
-    private func updateRecentSearches(_ newSearch: String) {
-        // Trim leading and trailing whitespace and exit function early if trimmed search is empty/whitespaces/new lines
-        let trimmedSearch = newSearch.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedSearch.isEmpty else { return }
+    private func saveRecentSearch(searchId: String) {
+        let trimmedSearchId = searchId.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedSearchId.isEmpty else { return }
+
+        let searchedOn = Int(Date().timeIntervalSince1970)
         
-        // Remove existing search if present
-        if let index = recentSearches.firstIndex(of: trimmedSearch) {
-            recentSearches.remove(at: index)
+        // Check if searchId exists in recentSearches and remove if it does (to append at the bottom later)
+        if recentSearches.contains(where: { $0["parcelId"] as? String == trimmedSearchId }) {
+            recentSearches.removeAll { $0["parcelId"] as? String == trimmedSearchId }
         }
-        // Add new search at the top
-        recentSearches.insert(trimmedSearch, at: 0)
-        saveRecentSearches()
-    }
-    
-    private func saveRecentSearches() {
+        
+        // Save new search to recentSearches
+        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "lastSearchedOn": searchedOn]
+        recentSearches.append(newSearch)
         UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
     
     private func clearRecentSearches() {
-        recentSearches.removeAll()
-        saveRecentSearches() // This call also clears recentSeaches from UserDefaults (bc of saveRecentSearches logic)
+        if !recentSearches.isEmpty {
+            recentSearches.removeAll()
+            UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
+        }
+    }
+    
+    private func formatTimestamp(_ timestamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        return dateFormatter.string(from: date)
     }
 }
 
