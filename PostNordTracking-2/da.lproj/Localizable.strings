@@ -5,3 +5,18 @@
   Created by Mathias Schindler on 27/07/2024.
   
 */
+
+"postTrackingTitle" = "Post Tracking";
+"homeTab" = "Hjem";
+"settingsTab" = "Indstillinger";
+"enterTrackingIdPlaceholder" = "Tilføj tracking ID";
+"recentSearchesEmptyMessage" = "Tidligere søgninger vises her";
+"recentSearchesTitle" = "Tidligere søgninger";
+"clearRecentSearches" = "Slet søgninger";
+
+"trackingDetailsTitle" = "Forsendelsesdetaljer";
+"shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
+"noShipmentDataFoundMessage" = "Ingen forsendelsesdetaljer for tracking ID\n%@.";
+
+"settingsSectionTitle" = "Indstillinger";
+"changeLanguageOption" = "Skift sprog";
