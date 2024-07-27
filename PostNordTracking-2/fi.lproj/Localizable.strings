@@ -6,17 +6,17 @@
   
 */
 
-"postTrackingTitle" = "Post Tracking";
-"homeTab" = "Home";
-"settingsTab" = "Settings";
-"enterTrackingIdPlaceholder" = "Enter tracking ID";
-"recentSearchesEmptyMessage" = "Recent searches will appear here";
-"recentSearchesTitle" = "Recent Searches";
-"clearRecentSearches" = "Clear Recent Searches";
+"postTrackingTitle" = "Pakettiseuranta";
+"homeTab" = "Aloitus";
+"settingsTab" = "Asetukset";
+"enterTrackingIdPlaceholder" = "Syötä seurantanumero";
+"recentSearchesEmptyMessage" = "Viimeisimmät haut näkyvät täällä";
+"recentSearchesTitle" = "Viimeisimmät haut";
+"clearRecentSearches" = "Tyhjennä viimeisimmät haut";
 
-"trackingDetailsTitle" = "Tracking Details";
-"shipmentDetailsFor" = "Shipment details for %@";
-"noShipmentDataFoundMessage" = "No shipment data found for tracking ID\n%@.";
+"trackingDetailsTitle" = "Seuranta-tiedot";
+"shipmentDetailsFor" = "Lähetyksen tiedot: %@";
+"noShipmentDataFoundMessage" = "Seurantatietoja ei löytynyt seurantanumerolle\n%@.";
 
-"settingsSectionTitle" = "Settings";
-"changeLanguageOption" = "Change Language";
+"settingsSectionTitle" = "Asetukset";
+"changeLanguageOption" = "Vaihda kieli";
