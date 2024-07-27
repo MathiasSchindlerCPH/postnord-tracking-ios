@@ -17,6 +17,7 @@
 		BC3D1B542C35D0CC001937E4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B532C35D0CB001937E4 /* APIManager.swift */; };
 		BC59000D2C428F8B009CB44A /* TrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC59000C2C428F8B009CB44A /* TrackingView.swift */; };
 		BC59000F2C42900A009CB44A /* LanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC59000E2C42900A009CB44A /* LanguageSelectionView.swift */; };
+		BCEF59012C55243200C6665D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCEF58FF2C55243200C6665D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 /* Begin PBXFileReference section */
 		BC3D1B262C35CFF3001937E4 /* PostNordTracking-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PostNordTracking-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3D1B292C35CFF3001937E4 /* PostNordTracking_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNordTracking_2App.swift; sourceTree = "<group>"; };
-		BC3D1B2B2C35CFF3001937E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BC3D1B2B2C35CFF3001937E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		BC3D1B2D2C35CFF6001937E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC3D1B302C35CFF6001937E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BC3D1B362C35CFF6001937E4 /* PostNordTracking-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PostNordTracking-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +51,8 @@
 		BC3D1B532C35D0CB001937E4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		BC59000C2C428F8B009CB44A /* TrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		BC59000E2C42900A009CB44A /* LanguageSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionView.swift; sourceTree = "<group>"; };
+		BCEF59002C55243200C6665D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BCEF59022C55243700C6665D /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 				BC59000C2C428F8B009CB44A /* TrackingView.swift */,
 				BC3D1B2D2C35CFF6001937E4 /* Assets.xcassets */,
 				BC3D1B2F2C35CFF6001937E4 /* Preview Content */,
+				BCEF58FF2C55243200C6665D /* Localizable.strings */,
 			);
 			path = "PostNordTracking-2";
 			sourceTree = "<group>";
@@ -222,6 +226,7 @@
 			knownRegions = (
 				en,
 				Base,
+				da,
 			);
 			mainGroup = BC3D1B1D2C35CFF3001937E4;
 			productRefGroup = BC3D1B272C35CFF3001937E4 /* Products */;
@@ -241,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC3D1B312C35CFF6001937E4 /* Preview Assets.xcassets in Resources */,
+				BCEF59012C55243200C6665D /* Localizable.strings in Resources */,
 				BC3D1B2E2C35CFF6001937E4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +311,18 @@
 			targetProxy = BC3D1B412C35CFF6001937E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BCEF58FF2C55243200C6665D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCEF59002C55243200C6665D /* en */,
+				BCEF59022C55243700C6665D /* da */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BC3D1B482C35CFF6001937E4 /* Debug */ = {
@@ -445,7 +463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dk.mathiasschindler.PostNordTracking-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -473,7 +491,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "dk.mathiasschindler.PostNordTracking-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
