@@ -6,6 +6,7 @@
   
 */
 
+/* ContentView */
 "postTrackingTitle" = "Postspårning";
 "homeTab" = "Hem";
 "settingsTab" = "Inställningar";
@@ -14,6 +15,7 @@
 "recentSearchesTitle" = "Senaste Sökningar";
 "clearRecentSearches" = "Rensa Senaste Sökningar";
 
+/* trackingView */
 "trackingDetailsTitle" = "Spårningsdetaljer";
 "shipmentDetailsFor" = "Fraktdetaljer för %@";
 "noShipmentDataFoundMessage" = "Inga fraktdatapunkter hittades för spårnings-ID\n%@.";
@@ -23,8 +25,6 @@
 "shipmentWeightModal" = "Paketvikt";
 "collectionMethodModal" = "Leveransmetod";
 
+/* LanguageSelectionView */
 "settingsSectionTitle" = "Inställningar";
 "changeLanguageOption" = "Ändra Språk";
-
-
-

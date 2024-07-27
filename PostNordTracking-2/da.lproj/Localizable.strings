@@ -6,6 +6,7 @@
   
 */
 
+/* ContentView */
 "postTrackingTitle" = "Post Tracking";
 "homeTab" = "Hjem";
 "settingsTab" = "Indstillinger";
@@ -14,6 +15,7 @@
 "recentSearchesTitle" = "Nylige Søgninger";
 "clearRecentSearches" = "Ryd Nylige Søgninger";
 
+/* trackingView */
 "trackingDetailsTitle" = "Tracking Detaljer";
 "shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
 "noShipmentDataFoundMessage" = "Ingen forsendelsesdata fundet for tracking-ID\n%@.";
@@ -23,6 +25,6 @@
 "shipmentWeightModal" = "Pakkevægt";
 "collectionMethodModal" = "Leveringsform";
 
+/* LanguageSelectionView */
 "settingsSectionTitle" = "Indstillinger";
 "changeLanguageOption" = "Skift Sprog";
-

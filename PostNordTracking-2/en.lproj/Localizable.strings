@@ -6,6 +6,7 @@
   
 */
 
+/* ContentView */
 "postTrackingTitle" = "Post Tracking";
 "homeTab" = "Home";
 "settingsTab" = "Settings";
@@ -14,6 +15,7 @@
 "recentSearchesTitle" = "Recent Searches";
 "clearRecentSearches" = "Clear Recent Searches";
 
+/* trackingView */
 "trackingDetailsTitle" = "Tracking Details";
 "shipmentDetailsFor" = "Shipment details for %@";
 "noShipmentDataFoundMessage" = "No shipment data found for tracking ID\n%@.";
@@ -23,5 +25,6 @@
 "shipmentWeightModal" = "Parcel Weight";
 "collectionMethodModal" = "Collection Method";
 
+/* LanguageSelectionView */
 "settingsSectionTitle" = "Settings";
 "changeLanguageOption" = "Change Language";
