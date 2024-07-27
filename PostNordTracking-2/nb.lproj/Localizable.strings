@@ -6,17 +6,23 @@
   
 */
 
-"postTrackingTitle" = "Postsporings";
+"postTrackingTitle" = "Postsporing";
 "homeTab" = "Hjem";
 "settingsTab" = "Innstillinger";
-"enterTrackingIdPlaceholder" = "Legg til sporings-ID";
-"recentSearchesEmptyMessage" = "Tidligere søk vises her";
-"recentSearchesTitle" = "Tidligere søk";
-"clearRecentSearches" = "Fjern søk";
+"enterTrackingIdPlaceholder" = "Skriv inn sporings-ID";
+"recentSearchesEmptyMessage" = "Nylige søk vises her";
+"recentSearchesTitle" = "Nylige Søkinger";
+"clearRecentSearches" = "Rydd Nylige Søkinger";
 
-"trackingDetailsTitle" = "Forsendelsesdetaljer";
+"trackingDetailsTitle" = "Sporingsdetaljer";
 "shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
-"noShipmentDataFoundMessage" = "Ingen forsendelsesdetaljer for sporings-ID\n%@.";
+"noShipmentDataFoundMessage" = "Ingen forsendelsesdata funnet for sporings-ID\n%@.";
+"shipmentStatusModal" = "Status";
+"senderNameModal" = "Avsender";
+"receiverAddressModal" = "Mottakeradresse";
+"shipmentWeightModal" = "Pakkevekt";
+"collectionMethodModal" = "Leveringsmetode";
 
 "settingsSectionTitle" = "Innstillinger";
-"changeLanguageOption" = "Bytt språk";
+"changeLanguageOption" = "Endre Språk";
+

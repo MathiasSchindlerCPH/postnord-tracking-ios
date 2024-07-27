@@ -6,18 +6,25 @@
   
 */
 
-"postTrackingTitle" = "Paketspårning";
+"postTrackingTitle" = "Postspårning";
 "homeTab" = "Hem";
 "settingsTab" = "Inställningar";
 "enterTrackingIdPlaceholder" = "Ange spårnings-ID";
-"recentSearchesEmptyMessage" = "Tidigare sökningar visas här";
-"recentSearchesTitle" = "Tidigare sökningar";
-"clearRecentSearches" = "Rensa sökningar";
+"recentSearchesEmptyMessage" = "Senaste sökningar visas här";
+"recentSearchesTitle" = "Senaste Sökningar";
+"clearRecentSearches" = "Rensa Senaste Sökningar";
 
-"trackingDetailsTitle" = "Leveransdetaljer";
-"shipmentDetailsFor" = "Leveransdetaljer för %@";
-"noShipmentDataFoundMessage" = "Inga leveransdetaljer för spårnings-ID\n%@.";
+"trackingDetailsTitle" = "Spårningsdetaljer";
+"shipmentDetailsFor" = "Fraktdetaljer för %@";
+"noShipmentDataFoundMessage" = "Inga fraktdatapunkter hittades för spårnings-ID\n%@.";
+"shipmentStatusModal" = "Status";
+"senderNameModal" = "Avsändare";
+"receiverAddressModal" = "Mottagaradress";
+"shipmentWeightModal" = "Paketvikt";
+"collectionMethodModal" = "Leveransmetod";
 
 "settingsSectionTitle" = "Inställningar";
-"changeLanguageOption" = "Byt språk";
+"changeLanguageOption" = "Ändra Språk";
+
+
 

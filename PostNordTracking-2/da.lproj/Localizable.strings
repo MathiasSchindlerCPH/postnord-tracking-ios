@@ -9,14 +9,20 @@
 "postTrackingTitle" = "Post Tracking";
 "homeTab" = "Hjem";
 "settingsTab" = "Indstillinger";
-"enterTrackingIdPlaceholder" = "Tilføj tracking ID";
-"recentSearchesEmptyMessage" = "Tidligere søgninger vises her";
-"recentSearchesTitle" = "Tidligere søgninger";
-"clearRecentSearches" = "Slet søgninger";
+"enterTrackingIdPlaceholder" = "Indtast tracking-ID";
+"recentSearchesEmptyMessage" = "Nylige søgninger vises her";
+"recentSearchesTitle" = "Nylige Søgninger";
+"clearRecentSearches" = "Ryd Nylige Søgninger";
 
-"trackingDetailsTitle" = "Forsendelsesdetaljer";
+"trackingDetailsTitle" = "Tracking Detaljer";
 "shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
-"noShipmentDataFoundMessage" = "Ingen forsendelsesdetaljer for tracking ID\n%@.";
+"noShipmentDataFoundMessage" = "Ingen forsendelsesdata fundet for tracking-ID\n%@.";
+"shipmentStatusModal" = "Status";
+"senderNameModal" = "Afsender";
+"receiverAddressModal" = "Modtageradresse";
+"shipmentWeightModal" = "Pakkevægt";
+"collectionMethodModal" = "Leveringsform";
 
 "settingsSectionTitle" = "Indstillinger";
-"changeLanguageOption" = "Skift sprog";
+"changeLanguageOption" = "Skift Sprog";
+
