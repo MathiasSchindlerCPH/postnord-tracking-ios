@@ -7,6 +7,11 @@ struct TrackingInformationResponse: Codable {
 struct Shipment: Codable {
     let shipmentId: String?
     let items: [Item]?
+    let statusText: StatusText?
+    let consignor: Consignor?
+    let consignee: Consignee?
+    let service: Service?
+    let totalWeight: TotalWeight?
 }
 
 struct Item: Codable {
@@ -30,6 +35,33 @@ struct Location: Codable {
     let postcode: String?
     let city: String?
     let locationType: String?
+}
+
+struct Consignor: Codable {
+    let name: String?
+}
+
+struct Consignee: Codable {
+    let address: Address?
+}
+
+struct Address: Codable {
+    let city: String?
+    let postCode: String?
+    let country: String?
+}
+
+struct StatusText: Codable {
+    let header: String?
+}
+
+struct Service: Codable {
+    let name: String?
+}
+
+struct TotalWeight: Codable {
+    let value: String?
+    let unit: String?
 }
 
 struct ShipmentEvent: Identifiable {
@@ -61,8 +93,8 @@ struct ShipmentEvent: Identifiable {
 
 
 class APIManager {
-    static func fetchShipmentDetails(for id: String, locale: String, completion: @escaping (Result<[ShipmentEvent], Error>) -> Void) {
-        let apiKey = "b5dbbd1173510f2d9cad0f9f280ab330" 
+    static func fetchShipmentDetails(for id: String, locale: String, completion: @escaping (Result<(statusSummary: String, shipmentWeight: String, senderName: String, receiverAddress: String, collectionMethod: String, events: [ShipmentEvent]), Error>) -> Void) {
+        let apiKey = "b5dbbd1173510f2d9cad0f9f280ab330"
         let baseURL = "https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json"
         
         guard let url = URL(string: "\(baseURL)?apikey=\(apiKey)&id=\(id)&locale=\(locale)") else {
@@ -89,16 +121,41 @@ class APIManager {
                    let shipment = trackingResponse.shipments?.first,
                    let item = shipment.items?.first,
                    let events = item.events {
-                        var shipmentEvents = events.map { event in
-                            ShipmentEvent(
-                                eventTime: event.eventTime ?? "Unknown time",
-                                eventDescription: event.eventDescription ?? "Unknown time",
-                                locationName: event.location?.name ?? " ",
-                                locationCountry: event.location?.country ?? " "
-                            )
-                        }
+                    
+                    let statusSummary = shipment.statusText?.header ?? "Unknown status"
+                    let senderName = shipment.consignor?.name ?? "Unknown sender"
+                    let collectionMethod = shipment.service?.name ?? "Unknown collection method"
+                    let receiverCity = shipment.consignee?.address?.city ?? "Unknown city"
+                    let receiverPostCode = shipment.consignee?.address?.postCode ?? "Unknown postcode"
+                    let receiverCountry = shipment.consignee?.address?.country ?? "Unknown country"
+                    let weightValue = shipment.totalWeight?.value ?? "Unknown value"
+                    let weightUnit = shipment.totalWeight?.unit ?? "Unknown unit"
+                    
+                    let receiverAddress: String
+                    if receiverCity != "Unknown city" && receiverPostCode != "Unknown postcode" && receiverCountry != "Unknown country" {
+                        receiverAddress = "\(receiverPostCode) \(receiverCity), \(receiverCountry)"
+                    } else {
+                        receiverAddress = "Unknown receiver adress"
+                    }
+                    
+                    let shipmentWeight: String
+                    if weightValue != "Unknown value" && weightUnit != "Unknown unit" {
+                        shipmentWeight = "\(weightValue) \(weightUnit)"
+                    } else {
+                        shipmentWeight = "Unknown weight"
+                    }
+                    
+                    var shipmentEvents = events.map { event in
+                        ShipmentEvent(
+                            eventTime: event.eventTime ?? "Unknown time",
+                            eventDescription: event.eventDescription ?? "Unknown description",
+                            locationName: event.location?.name ?? "Unknown location",
+                            locationCountry: event.location?.country ?? "Unknown country"
+                        )
+                    }
                     shipmentEvents.reverse()
-                    completion(.success(shipmentEvents))
+                    
+                    completion(.success((statusSummary: statusSummary, shipmentWeight: shipmentWeight, senderName: senderName, receiverAddress: receiverAddress, collectionMethod: collectionMethod, events: shipmentEvents)))
                 } else {
                     completion(.failure(NSError(domain: "No shipments found", code: 1, userInfo: nil)))
                 }
