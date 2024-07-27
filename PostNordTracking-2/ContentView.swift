@@ -10,8 +10,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
     @State private var selectedLanguageCode = "en"
-    @State private var isTrackingViewActive: Bool = false
+    
+    @State private var navigationPath = NavigationPath()
     
     @State private var manualSearchId: String = ""
     @State private var tappedRecentSearchId: String = ""
@@ -26,8 +28,8 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView {
-            NavigationStack {
+        TabView(selection: $selectedTab) {
+            NavigationStack(path: $navigationPath) {
                 VStack {
                     HStack {
                         TextField("Enter tracking ID", text: $manualSearchId)
@@ -94,21 +96,28 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("Post Tracking")
-                .navigationDestination(isPresented: $isTrackingViewActive) {
-                    TrackingView(inputReferenceNumber: trackingViewSearchId, selectedLanguageCode: selectedLanguageCode)
-                    .onDisappear {
-                        //Only update recent searches after TrackingView closes
-                        saveRecentSearch(searchId: trackingViewSearchId)
-                        
-                        // Reset manualSearchId and trackingViewSearchId after closing trackingView
-                        manualSearchId = ""
-                        trackingViewSearchId = ""
-                    }
+                .navigationDestination(for: String.self) { trackingId in
+                    TrackingView(inputReferenceNumber: trackingId, selectedLanguageCode: selectedLanguageCode)
+                        .onDisappear {
+                            // Only update recent searches after TrackingView closes
+                            saveRecentSearch(searchId: trackingId)
+                            
+                            // Reset manualSearchId and trackingViewSearchId after closing TrackingView
+                            manualSearchId = ""
+                            trackingViewSearchId = ""
+                        }
                 }
                 .padding()
             }
             .tabItem {
                 Label("Home", systemImage: "house")
+            }
+            .tag(0)
+            .onChange(of: selectedTab) {
+                if selectedTab == 0 {
+                    // Reset navigation stack path when Home tab is selected
+                    navigationPath = NavigationPath()
+                }
             }
             
             NavigationView {
@@ -117,6 +126,7 @@ struct ContentView: View {
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
+            .tag(1)
         }
     }
     
@@ -126,7 +136,7 @@ struct ContentView: View {
         } else if !tappedRecentSearchId.isEmpty {
             trackingViewSearchId = tappedRecentSearchId
         }
-        isTrackingViewActive = true
+        navigationPath.append(trackingViewSearchId)
     }
     
     private func saveRecentSearch(searchId: String) {
