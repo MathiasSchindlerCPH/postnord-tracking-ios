@@ -9,11 +9,25 @@ import SwiftUI
 
 struct TrackingView: View {
     let inputReferenceNumber: String
-    let selectedLanguageCode: String
     
     @State private var isLoading = true
     @State private var shipmentEvents: [ShipmentEvent] = []
     @State private var errorMessage: String?
+    
+    private var selectedLanguageCode: String {
+        let preferredLanguage = Locale.preferredLanguages.first ?? "en" // Retrieves user's preferred language, i.e. "en-US", "da-DK", "sv-SE", etc.
+        let languageCodeMapping: [String: String] = [
+            "en": "en",
+            "da": "da",
+            "sv": "sv",
+            "no": "no",
+            "nb": "no", // Norwegian Bokmål
+            "fi": "fi"
+        ]
+        let languageCode = preferredLanguage.split(separator: "-").first ?? "en"
+        
+        return languageCodeMapping[String(languageCode)] ?? "en" // Return the corresponding language code or default to "en"
+    }
     
     var body: some View {
         VStack {
@@ -22,7 +36,7 @@ struct TrackingView: View {
             } else if !shipmentEvents.isEmpty {
                 ScrollView {
                     VStack(alignment: .leading) {
-                        Text("Shipment details for \(inputReferenceNumber)")
+                        Text(String(format: NSLocalizedString("shipmentDetailsFor", comment: "Shipment details for "), inputReferenceNumber))
                             .font(.headline)
                             .padding(.bottom, 8)
                         Divider()
@@ -47,17 +61,19 @@ struct TrackingView: View {
                 }
             } else {
                 VStack {
-                    Text("No shipment data found for tracking ID\n\(inputReferenceNumber).")
+                    Text(String(format: NSLocalizedString("noShipmentDataFoundMessage", comment: "No shipment data found for tracking ID\n"), inputReferenceNumber))
                         .foregroundColor(.gray)
                         .padding()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .navigationTitle("Tracking Details")
+        .navigationTitle(NSLocalizedString("trackingDetailsTitle", comment: "Tracking Details"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: selectedLanguageCode) { result in
+            let languageCode = selectedLanguageCode
+            
+            APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
                 switch result {
                 case .success(let events):
                     DispatchQueue.main.async {
