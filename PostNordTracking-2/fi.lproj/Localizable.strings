@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  PostNordTracking-2
+
+  Created by Mathias Schindler on 27/07/2024.
+  
+*/
+
+"postTrackingTitle" = "Pakettiseuranta";
+"homeTab" = "Aloitus";
+"settingsTab" = "Asetukset";
+"enterTrackingIdPlaceholder" = "Syötä seurantanumero";
+"recentSearchesEmptyMessage" = "Viimeisimmät haut näkyvät täällä";
+"recentSearchesTitle" = "Viimeisimmät haut";
+"clearRecentSearches" = "Tyhjennä viimeisimmät haut";
+
+"trackingDetailsTitle" = "Seuranta-tiedot";
+"shipmentDetailsFor" = "Lähetyksen tiedot: %@";
+"noShipmentDataFoundMessage" = "Seurantatietoja ei löytynyt seurantanumerolle\n%@.";
+
+"settingsSectionTitle" = "Asetukset";
+"changeLanguageOption" = "Vaihda kieli";

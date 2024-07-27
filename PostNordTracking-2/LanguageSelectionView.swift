@@ -8,27 +8,53 @@
 import SwiftUI
 
 struct LanguageSelectionView: View {
-    @Binding var selectedLanguageCode: String
-
-    let languages = ["English":"en",
-                     "Danish":"da",
-                     "Swedish":"sv",
-                     "Norwegian":"no",
-                     "Finnish":"fi" ]
-    let languageOrder = ["English", "Danish", "Swedish", "Norwegian", "Finnish"] // Necessary for order maintained after build.
-
     var body: some View {
-        VStack {
-            Text("Select Language")
-            Picker(selection: $selectedLanguageCode, label: Text("Select Language for Tracking Info")) {
-                ForEach(languageOrder, id: \.self) { key in
-                    Text(key).tag(languages[key]!)
+        NavigationView {
+            VStack {
+                List {
+                    // Move the language change section to the top
+                    Section {
+                        Button(action: openSettings) {
+                            HStack {
+                                Text(NSLocalizedString("changeLanguageOption", comment: "Change Language"))
+                                    .font(.body)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
+                .listStyle(InsetGroupedListStyle())
+                
+                // App version section at the bottom
+                VStack {
+                    Text("Version \(getAppVersion())")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 16)
+                }
+                .background(Color(.systemGroupedBackground))
             }
-            .pickerStyle(WheelPickerStyle())
-            .padding()
+            .navigationTitle(NSLocalizedString("settingsSectionTitle", comment: "Settings"))
+            .background(Color(.systemGroupedBackground))
         }
-        .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func openSettings() {
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+        }
+    }
+
+    private func getAppVersion() -> String {
+        // Get the app version from the app's info dictionary
+        if let infoDictionary = Bundle.main.infoDictionary,
+           let version = infoDictionary["CFBundleShortVersionString"] as? String {
+            return version
+        }
+        return "Unknown"
     }
 }

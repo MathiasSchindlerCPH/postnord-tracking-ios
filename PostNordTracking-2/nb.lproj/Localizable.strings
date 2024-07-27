@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  PostNordTracking-2
+
+  Created by Mathias Schindler on 27/07/2024.
+  
+*/
+
+"postTrackingTitle" = "Postsporings";
+"homeTab" = "Hjem";
+"settingsTab" = "Innstillinger";
+"enterTrackingIdPlaceholder" = "Legg til sporings-ID";
+"recentSearchesEmptyMessage" = "Tidligere søk vises her";
+"recentSearchesTitle" = "Tidligere søk";
+"clearRecentSearches" = "Fjern søk";
+
+"trackingDetailsTitle" = "Forsendelsesdetaljer";
+"shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
+"noShipmentDataFoundMessage" = "Ingen forsendelsesdetaljer for sporings-ID\n%@.";
+
+"settingsSectionTitle" = "Innstillinger";
+"changeLanguageOption" = "Bytt språk";
