@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var selectedLanguageCode = "en"
     
     @State private var navigationPath = NavigationPath()
+    @State private var showNoRecentSearchesText = false
     
     @State private var manualSearchId: String = ""
     @State private var tappedRecentSearchId: String = ""
@@ -78,18 +79,31 @@ struct ContentView: View {
                                 }
                              
                                 Button(role: .destructive, action: {
-                                    clearRecentSearches()
+                                    withAnimation {
+                                        clearRecentSearches()
+                                    }
                                 }) {
                                     Label("Clear Recent Searches", systemImage: "trash")
                                 }
                                 .padding()
                             }
                         }
+                        .transition(.slide.combined(with: .opacity)) // Animation when tab "Clear Recent Searches"
                     } else {
                         VStack {
                             Text("Recent searches will appear here")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
+                                .opacity(showNoRecentSearchesText ? 1 : 0) // Fade in effect
+                                .animation(.easeIn(duration: 0.5), value: showNoRecentSearchesText) // Custom duration for fade-in
+                                .onAppear {
+                                    // Set delay for the fade-in effect
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // Adjust delay as needed
+                                        withAnimation {
+                                            showNoRecentSearchesText = true
+                                        }
+                                    }
+                                }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
@@ -160,6 +174,14 @@ struct ContentView: View {
         if !recentSearches.isEmpty {
             recentSearches.removeAll()
             UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
+            
+            // Reset and reapply fade-in animation
+            showNoRecentSearchesText = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Short delay before fade-in
+                withAnimation {
+                    showNoRecentSearchesText = true
+                }
+            }
         }
     }
     
