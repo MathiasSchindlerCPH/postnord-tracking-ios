@@ -16,7 +16,7 @@ struct LanguageSelectionView: View {
                     Section {
                         Button(action: openSettings) {
                             HStack {
-                                Text(NSLocalizedString("Change Language", comment: ""))
+                                Text(NSLocalizedString("changeLanguageOption", comment: "Change Language"))
                                     .font(.body)
                                 Spacer()
                                 Image(systemName: "chevron.right")
@@ -38,7 +38,7 @@ struct LanguageSelectionView: View {
                 }
                 .background(Color(.systemGroupedBackground))
             }
-            .navigationTitle(NSLocalizedString("Settings", comment: ""))
+            .navigationTitle(NSLocalizedString("settingsSectionTitle", comment: "Settings"))
             .background(Color(.systemGroupedBackground))
         }
     }
