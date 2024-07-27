@@ -33,7 +33,7 @@ struct ContentView: View {
             NavigationStack(path: $navigationPath) {
                 VStack {
                     HStack {
-                        TextField("Enter tracking ID", text: $manualSearchId)
+                        TextField(NSLocalizedString("enterTrackingIdPlaceholder", comment: "Enter tracking ID"), text: $manualSearchId)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
                         Button(action: {
@@ -50,7 +50,7 @@ struct ContentView: View {
                     // Recent Searches List
                     if !recentSearches.isEmpty {
                         VStack(alignment: .leading) {
-                            Text("Recent Searches")
+                            Text(NSLocalizedString("recentSearchesTitle", comment: "Recent Searches"))
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             
@@ -83,7 +83,7 @@ struct ContentView: View {
                                         clearRecentSearches()
                                     }
                                 }) {
-                                    Label("Clear Recent Searches", systemImage: "trash")
+                                    Label(NSLocalizedString("clearRecentSearches", comment: "Clear Recent Searches"), systemImage: "trash")
                                 }
                                 .padding()
                             }
@@ -91,7 +91,7 @@ struct ContentView: View {
                         .transition(.slide.combined(with: .opacity)) // Animation when tab "Clear Recent Searches"
                     } else {
                         VStack {
-                            Text("Recent searches will appear here")
+                            Text(NSLocalizedString("recentSearchesEmptyMessage", comment: "Recent searches will appear here"))
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .opacity(showNoRecentSearchesText ? 1 : 0) // Fade in effect
@@ -109,9 +109,10 @@ struct ContentView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .navigationTitle("Post Tracking")
+                .navigationTitle(NSLocalizedString("postTrackingTitle", comment: ""))
                 .navigationDestination(for: String.self) { trackingId in
-                    TrackingView(inputReferenceNumber: trackingId, selectedLanguageCode: selectedLanguageCode)
+                    //TrackingView(inputReferenceNumber: trackingId, selectedLanguageCode: selectedLanguageCode)
+                    TrackingView(inputReferenceNumber: trackingId)
                         .onDisappear {
                             // Only update recent searches after TrackingView closes
                             saveRecentSearch(searchId: trackingId)
@@ -124,7 +125,7 @@ struct ContentView: View {
                 .padding()
             }
             .tabItem {
-                Label("Home", systemImage: "house")
+                Label(NSLocalizedString("homeTab", comment: ""), systemImage: "house")
             }
             .tag(0)
             .onChange(of: selectedTab) {
@@ -135,10 +136,10 @@ struct ContentView: View {
             }
             
             NavigationView {
-                LanguageSelectionView(selectedLanguageCode: $selectedLanguageCode)
+                LanguageSelectionView()
             }
             .tabItem {
-                Label("Settings", systemImage: "gear")
+                Label(NSLocalizedString("settingsTab", comment: ""), systemImage: "gear")
             }
             .tag(1)
         }
