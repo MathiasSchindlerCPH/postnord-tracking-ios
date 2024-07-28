@@ -48,15 +48,15 @@
 		BC3D1B402C35CFF6001937E4 /* PostNord-TrackingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PostNord-TrackingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3D1B442C35CFF6001937E4 /* PostNord-TrackingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostNord-TrackingUITests.swift"; sourceTree = "<group>"; };
 		BC3D1B462C35CFF6001937E4 /* PostNord-TrackingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostNord-TrackingUITestsLaunchTests.swift"; sourceTree = "<group>"; };
+		BCC61B742C56470D001F4053 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BCC61B752C56470D001F4053 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCC9153D2C56378E0086CFD4 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		BCC9153F2C56378E0086CFD4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BCC915412C56378E0086CFD4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BCC915422C56378E0086CFD4 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BCC915432C56378E0086CFD4 /* TrackingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		BCC915452C56378E0086CFD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BCC915462C56378E0086CFD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCC915482C56378E0086CFD4 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
-		BCC9154A2C56378E0086CFD4 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCC9154C2C56378E0086CFD4 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCC9154E2C56378E0086CFD4 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCC915502C56378E0086CFD4 /* PostNord-TrackingApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostNord-TrackingApp.swift"; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 			};
 			buildConfigurationList = BC3D1B212C35CFF3001937E4 /* Build configuration list for PBXProject "PostNord-Tracking" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = da;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -350,7 +350,7 @@
 		BCC915472C56378E0086CFD4 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BCC915462C56378E0086CFD4 /* en */,
+				BCC61B742C56470D001F4053 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -366,7 +366,7 @@
 		BCC9154B2C56378E0086CFD4 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				BCC9154A2C56378E0086CFD4 /* da */,
+				BCC61B752C56470D001F4053 /* da */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
