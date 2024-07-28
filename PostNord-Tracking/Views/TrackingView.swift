@@ -29,7 +29,7 @@ struct TrackingView: View {
             "da": "da",
             "sv": "sv",
             "no": "no",
-            "nb": "no", // Norwegian Bokmål
+            "nb": "no", // nb = Norwegian Bokmål
             "fi": "fi"
         ]
         
@@ -146,12 +146,11 @@ struct DetailedInfoModalView: View {
                         
                         Spacer()
                     }
-                    .multilineTextAlignment(.center)
                     .padding()
                 }
             }
             .padding()
-            .navigationTitle("Detailed Info")
+            .navigationTitle(NSLocalizedString("detailedViewModal", comment: "Detailed Info"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -182,7 +181,10 @@ struct InfoSection: View {
             }
             Text(content)
                 .font(.body)
+                .padding(.bottom, 10)
+            
             Divider()
         }
+        .padding(.top, 5)
     }
 }
