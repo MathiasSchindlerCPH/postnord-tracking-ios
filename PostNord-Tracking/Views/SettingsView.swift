@@ -12,7 +12,6 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 List {
-                    // Move the language change section to the top
                     Section {
                         Button(action: openSettings) {
                             HStack {
@@ -22,13 +21,13 @@ struct SettingsView: View {
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.gray)
                             }
+                            .contentShape(Rectangle()) // To make entire row tappable, not just text within
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
                 
-                // App version section at the bottom
                 VStack {
                     Text("Version \(getAppVersion())")
                         .font(.footnote)
@@ -50,7 +49,6 @@ struct SettingsView: View {
     }
 
     private func getAppVersion() -> String {
-        // Get the app version from the app's info dictionary
         if let infoDictionary = Bundle.main.infoDictionary,
            let version = infoDictionary["CFBundleShortVersionString"] as? String {
             return version

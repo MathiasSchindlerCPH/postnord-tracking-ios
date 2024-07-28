@@ -43,6 +43,7 @@ struct HomeView: View {
                             }
                         }) {
                             Image(systemName: "plus")
+                                .imageScale(.large)
                         }
                         .buttonStyle(BorderlessButtonStyle())
                     }
@@ -74,6 +75,7 @@ struct HomeView: View {
                                                     .padding(.bottom, 6)
                                                 Divider()
                                             }
+                                            .contentShape(Rectangle()) // To make entire row tappable, not just text within
                                         }
                                         .buttonStyle(PlainButtonStyle())
                                     }
