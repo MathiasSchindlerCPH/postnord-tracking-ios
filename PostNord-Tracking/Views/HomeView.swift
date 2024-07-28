@@ -36,6 +36,11 @@ struct HomeView: View {
                     HStack {
                         TextField(NSLocalizedString("enterTrackingIdPlaceholder", comment: "Enter tracking ID"), text: $manualSearchId)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onSubmit {
+                                if !manualSearchId.isEmpty {
+                                    navigateToTrackingView(search: manualSearchId)
+                                }
+                            }
                         
                         Button(action: {
                             if !manualSearchId.isEmpty {
