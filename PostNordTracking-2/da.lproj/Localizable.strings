@@ -11,9 +11,9 @@
 "homeTab" = "Hjem";
 "settingsTab" = "Indstillinger";
 "enterTrackingIdPlaceholder" = "Indtast tracking-ID";
-"recentSearchesEmptyMessage" = "Nylige søgninger vises her";
-"recentSearchesTitle" = "Nylige Søgninger";
-"clearRecentSearches" = "Ryd Nylige Søgninger";
+"recentSearchesEmptyMessage" = "Seneste søgninger vises her";
+"recentSearchesTitle" = "Seneste søgninger";
+"clearRecentSearches" = "Slet søgninger";
 
 /* trackingView */
 "trackingDetailsTitle" = "Tracking Detaljer";
