@@ -22,7 +22,7 @@ struct TrackingView: View {
     @State private var collectionMethod: String = ""
     @State private var shipmentWeight: String = ""
     
-    private var selectedLanguageCode: String {
+    /*private var selectedLanguageCode: String {
         let preferredLanguage = Locale.preferredLanguages.first ?? "en" // Retrieves user's preferred language, i.e. "en-US", "da-DK", "sv-SE", etc.
         let languageCodeMapping: [String: String] = [
             "en": "en",
@@ -35,6 +35,20 @@ struct TrackingView: View {
         let languageCode = preferredLanguage.split(separator: "-").first ?? "en"
         
         return languageCodeMapping[String(languageCode)] ?? "en" // Return the corresponding language code or default to "en"
+    }*/
+    
+    private var selectedLanguageCode: String {
+        let appLanguageCode = Locale.current.language.languageCode?.identifier ?? "en" // Load language from app settings, nb: not on OS-level
+        let languageCodeMapping: [String: String] = [
+            "en": "en",
+            "da": "da",
+            "sv": "sv",
+            "no": "no",
+            "nb": "no", // Norwegian Bokmål
+            "fi": "fi"
+        ]
+        
+        return languageCodeMapping[appLanguageCode] ?? "en" // Return the corresponding language code or default to "en"
     }
     
     var body: some View {
