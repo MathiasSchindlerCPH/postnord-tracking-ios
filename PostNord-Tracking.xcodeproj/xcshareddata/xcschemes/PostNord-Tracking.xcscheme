@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BC3D1B252C35CFF3001937E4"
-               BuildableName = "PostNordTracking-2.app"
-               BlueprintName = "PostNordTracking-2"
-               ReferencedContainer = "container:PostNordTracking-2.xcodeproj">
+               BuildableName = "PostNord-Tracking.app"
+               BlueprintName = "PostNord-Tracking"
+               ReferencedContainer = "container:PostNord-Tracking.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BC3D1B352C35CFF6001937E4"
-               BuildableName = "PostNordTracking-2Tests.xctest"
-               BlueprintName = "PostNordTracking-2Tests"
-               ReferencedContainer = "container:PostNordTracking-2.xcodeproj">
+               BuildableName = "PostNord-TrackingTests.xctest"
+               BlueprintName = "PostNord-TrackingTests"
+               ReferencedContainer = "container:PostNord-Tracking.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BC3D1B3F2C35CFF6001937E4"
-               BuildableName = "PostNordTracking-2UITests.xctest"
-               BlueprintName = "PostNordTracking-2UITests"
-               ReferencedContainer = "container:PostNordTracking-2.xcodeproj">
+               BuildableName = "PostNord-TrackingUITests.xctest"
+               BlueprintName = "PostNord-TrackingUITests"
+               ReferencedContainer = "container:PostNord-Tracking.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BC3D1B252C35CFF3001937E4"
-            BuildableName = "PostNordTracking-2.app"
-            BlueprintName = "PostNordTracking-2"
-            ReferencedContainer = "container:PostNordTracking-2.xcodeproj">
+            BuildableName = "PostNord-Tracking.app"
+            BlueprintName = "PostNord-Tracking"
+            ReferencedContainer = "container:PostNord-Tracking.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -87,9 +87,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BC3D1B252C35CFF3001937E4"
-            BuildableName = "PostNordTracking-2.app"
-            BlueprintName = "PostNordTracking-2"
-            ReferencedContainer = "container:PostNordTracking-2.xcodeproj">
+            BuildableName = "PostNord-Tracking.app"
+            BlueprintName = "PostNord-Tracking"
+            ReferencedContainer = "container:PostNord-Tracking.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

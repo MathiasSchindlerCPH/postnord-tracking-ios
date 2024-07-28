@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct PostNordTracking_2App: App {
+struct PostNord_TrackingApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
