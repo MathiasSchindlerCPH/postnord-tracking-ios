@@ -156,13 +156,13 @@
 				BCC915402C56378E0086CFD4 /* Preview Content */,
 				BCC9153E2C56378E0086CFD4 /* Managers */,
 				BCC915442C56378E0086CFD4 /* Views */,
+				BCC915502C56378E0086CFD4 /* PostNord-TrackingApp.swift */,
 				BCC915452C56378E0086CFD4 /* Assets.xcassets */,
 				BCC915472C56378E0086CFD4 /* Localizable.strings */,
 				BCC915492C56378E0086CFD4 /* Localizable.strings */,
 				BCC9154B2C56378E0086CFD4 /* Localizable.strings */,
 				BCC9154D2C56378E0086CFD4 /* Localizable.strings */,
 				BCC9154F2C56378E0086CFD4 /* Localizable.strings */,
-				BCC915502C56378E0086CFD4 /* PostNord-TrackingApp.swift */,
 			);
 			path = "PostNord-Tracking";
 			sourceTree = SOURCE_ROOT;
