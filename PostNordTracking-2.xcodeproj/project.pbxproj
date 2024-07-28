@@ -14,8 +14,8 @@
 		BC3D1B452C35CFF6001937E4 /* PostNordTracking_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B442C35CFF6001937E4 /* PostNordTracking_2UITests.swift */; };
 		BC3D1B472C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D1B462C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift */; };
 		BCA5F2C02C56339100E8EB38 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2BF2C56339100E8EB38 /* APIManager.swift */; };
-		BCA5F2C42C5633D700E8EB38 /* LanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2C12C5633D700E8EB38 /* LanguageSelectionView.swift */; };
-		BCA5F2C52C5633D700E8EB38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2C22C5633D700E8EB38 /* ContentView.swift */; };
+		BCA5F2C42C5633D700E8EB38 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2C12C5633D700E8EB38 /* SettingsView.swift */; };
+		BCA5F2C52C5633D700E8EB38 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2C22C5633D700E8EB38 /* HomeView.swift */; };
 		BCA5F2C62C5633D700E8EB38 /* TrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA5F2C32C5633D700E8EB38 /* TrackingView.swift */; };
 		BCEF59012C55243200C6665D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCEF58FF2C55243200C6665D /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -48,8 +48,8 @@
 		BC3D1B442C35CFF6001937E4 /* PostNordTracking_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNordTracking_2UITests.swift; sourceTree = "<group>"; };
 		BC3D1B462C35CFF6001937E4 /* PostNordTracking_2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNordTracking_2UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BCA5F2BF2C56339100E8EB38 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		BCA5F2C12C5633D700E8EB38 /* LanguageSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSelectionView.swift; sourceTree = "<group>"; };
-		BCA5F2C22C5633D700E8EB38 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BCA5F2C12C5633D700E8EB38 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BCA5F2C22C5633D700E8EB38 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BCA5F2C32C5633D700E8EB38 /* TrackingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingView.swift; sourceTree = "<group>"; };
 		BCEF59002C55243200C6665D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCEF59022C55243700C6665D /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -152,8 +152,8 @@
 		BCA5F2BE2C56337500E8EB38 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BCA5F2C22C5633D700E8EB38 /* ContentView.swift */,
-				BCA5F2C12C5633D700E8EB38 /* LanguageSelectionView.swift */,
+				BCA5F2C22C5633D700E8EB38 /* HomeView.swift */,
+				BCA5F2C12C5633D700E8EB38 /* SettingsView.swift */,
 				BCA5F2C32C5633D700E8EB38 /* TrackingView.swift */,
 			);
 			path = Views;
@@ -295,10 +295,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCA5F2C02C56339100E8EB38 /* APIManager.swift in Sources */,
-				BCA5F2C52C5633D700E8EB38 /* ContentView.swift in Sources */,
+				BCA5F2C52C5633D700E8EB38 /* HomeView.swift in Sources */,
 				BCA5F2C62C5633D700E8EB38 /* TrackingView.swift in Sources */,
 				BC3D1B2A2C35CFF3001937E4 /* PostNordTracking_2App.swift in Sources */,
-				BCA5F2C42C5633D700E8EB38 /* LanguageSelectionView.swift in Sources */,
+				BCA5F2C42C5633D700E8EB38 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
