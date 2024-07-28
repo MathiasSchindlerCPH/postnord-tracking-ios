@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  PostNordTracking
 //
 //  Created by Mathias Schindler on 27/06/2024.
@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
     @State private var selectedTab = 0
     @State private var selectedLanguageCode = "en"
     
@@ -137,7 +137,7 @@ struct ContentView: View {
             }
             
             NavigationView {
-                LanguageSelectionView()
+                SettingsView()
             }
             .tabItem {
                 Label(NSLocalizedString("settingsTab", comment: ""), systemImage: "gear")
@@ -194,5 +194,5 @@ struct ContentView: View {
 }
 
 /*#Preview {
-    ContentView()
+    HomeView()
 }*/

@@ -1,5 +1,5 @@
 //
-//  LanguageSelectionView.swift
+//  SettingsView.swift
 //  PostNordTracking-2
 //
 //  Created by Mathias Schindler on 13/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LanguageSelectionView: View {
+struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack {
