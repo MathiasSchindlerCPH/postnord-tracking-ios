@@ -19,6 +19,7 @@
 "trackingDetailsTitle" = "Spårningsdetaljer";
 "shipmentDetailsFor" = "Fraktdetaljer för %@";
 "noShipmentDataFoundMessage" = "Inga fraktdatapunkter hittades för spårnings-ID\n%@.";
+"detailedViewModal" = "Mer info";
 "shipmentStatusModal" = "Status";
 "senderNameModal" = "Avsändare";
 "receiverAddressModal" = "Mottagaradress";

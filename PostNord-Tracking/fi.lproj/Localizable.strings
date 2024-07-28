@@ -19,6 +19,7 @@
 "trackingDetailsTitle" = "Seurannan tiedot";
 "shipmentDetailsFor" = "Lähetyksen tiedot: %@";
 "noShipmentDataFoundMessage" = "Seuranta-ID:lle\n%@ ei löytynyt lähetyksen tietoja.";
+"detailedViewModal" = "Lisätietoja";
 "shipmentStatusModal" = "Tila";
 "senderNameModal" = "Lähettäjä";
 "receiverAddressModal" = "Vastaanottajan osoite";

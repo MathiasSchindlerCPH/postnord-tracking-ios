@@ -16,9 +16,10 @@
 "clearRecentSearches" = "Slet søgninger";
 
 /* trackingView */
-"trackingDetailsTitle" = "Tracking Detaljer";
+"trackingDetailsTitle" = "Forsendelsesdetaljer";
 "shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
 "noShipmentDataFoundMessage" = "Ingen forsendelsesdata fundet for tracking-ID\n%@.";
+"detailedViewModal" = "Yderligere info";
 "shipmentStatusModal" = "Status";
 "senderNameModal" = "Afsender";
 "receiverAddressModal" = "Modtageradresse";

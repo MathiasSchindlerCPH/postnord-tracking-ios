@@ -19,6 +19,7 @@
 "trackingDetailsTitle" = "Tracking Details";
 "shipmentDetailsFor" = "Shipment details for %@";
 "noShipmentDataFoundMessage" = "No shipment data found for tracking ID\n%@.";
+"detailedViewModal" = "Detailed Info";
 "shipmentStatusModal" = "Status";
 "senderNameModal" = "Sender";
 "receiverAddressModal" = "Destination Address";
