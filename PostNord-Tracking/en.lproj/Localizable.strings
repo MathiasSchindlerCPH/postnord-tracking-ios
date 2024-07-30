@@ -15,7 +15,7 @@
 "recentSearchesTitle" = "Recent Searches";
 "clearRecentSearches" = "Clear Recent Searches";
 
-/* trackingView */
+/* TrackingView */
 "trackingDetailsTitle" = "Tracking Details";
 "shipmentDetailsFor" = "Shipment details for %@";
 "noShipmentDataFoundMessage" = "No shipment data found for tracking ID\n%@.";
@@ -26,6 +26,8 @@
 "shipmentWeightModal" = "Parcel Weight";
 "collectionMethodModal" = "Collection Method";
 
-/* LanguageSelectionView */
+/* SettingsView */
 "settingsSectionTitle" = "Settings";
 "changeLanguageOption" = "Change Language";
+"reportIssueOption" = "Report an Issue";
+"reportIssueEmailSubject" = "Issue with Post Tracking App";

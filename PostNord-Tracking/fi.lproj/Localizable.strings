@@ -15,7 +15,7 @@
 "recentSearchesTitle" = "Viimeisimmät Haut";
 "clearRecentSearches" = "Tyhjennä Viimeisimmät Haut";
 
-/* trackingView */
+/* TrackingView */
 "trackingDetailsTitle" = "Seurannan tiedot";
 "shipmentDetailsFor" = "Lähetyksen tiedot: %@";
 "noShipmentDataFoundMessage" = "Seuranta-ID:lle\n%@ ei löytynyt lähetyksen tietoja.";
@@ -26,6 +26,8 @@
 "shipmentWeightModal" = "Paketin paino";
 "collectionMethodModal" = "Toimitustapa";
 
-/* LanguageSelectionView */
+/* SettingsView */
 "settingsSectionTitle" = "Asetukset";
 "changeLanguageOption" = "Vaihda Kieli";
+"reportIssueOption" = "Ilmoita tekninen virhe";
+"reportIssueEmailSubject" = "Ongelma sovelluksessa";

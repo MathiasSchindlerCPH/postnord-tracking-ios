@@ -15,7 +15,7 @@
 "recentSearchesTitle" = "Seneste søgninger";
 "clearRecentSearches" = "Slet søgninger";
 
-/* trackingView */
+/* TrackingView */
 "trackingDetailsTitle" = "Forsendelsesdetaljer";
 "shipmentDetailsFor" = "Forsendelsesdetaljer for %@";
 "noShipmentDataFoundMessage" = "Ingen forsendelsesdata fundet for tracking-ID\n%@.";
@@ -26,6 +26,8 @@
 "shipmentWeightModal" = "Pakkevægt";
 "collectionMethodModal" = "Leveringsform";
 
-/* LanguageSelectionView */
+/* SettingsView */
 "settingsSectionTitle" = "Indstillinger";
 "changeLanguageOption" = "Skift sprog";
+"reportIssueOption" = "Anmeld teknisk fejl";
+"reportIssueEmailSubject" = "Problem med app";

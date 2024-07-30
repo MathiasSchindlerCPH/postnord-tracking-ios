@@ -15,7 +15,7 @@
 "recentSearchesTitle" = "Senaste Sökningar";
 "clearRecentSearches" = "Rensa Senaste Sökningar";
 
-/* trackingView */
+/* TrackingView */
 "trackingDetailsTitle" = "Spårningsdetaljer";
 "shipmentDetailsFor" = "Fraktdetaljer för %@";
 "noShipmentDataFoundMessage" = "Inga fraktdatapunkter hittades för spårnings-ID\n%@.";
@@ -26,6 +26,8 @@
 "shipmentWeightModal" = "Paketvikt";
 "collectionMethodModal" = "Leveransmetod";
 
-/* LanguageSelectionView */
+/* SettingsView */
 "settingsSectionTitle" = "Inställningar";
 "changeLanguageOption" = "Ändra Språk";
+"reportIssueOption" = "Rapportera tekniskt fel";
+"reportIssueEmailSubject" = "Problem med appen";
