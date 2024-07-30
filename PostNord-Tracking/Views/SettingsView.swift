@@ -37,9 +37,10 @@ struct SettingsView: View {
                             HStack {
                                 Text(NSLocalizedString("reportIssueOption", comment: "Report an Issue"))
                                     .font(.body)
+                                    .foregroundColor(.red)
                                 Spacer()
                                 Image(systemName: "envelope")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.red)
                             }
                             .contentShape(Rectangle())
                         }
