@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrackingView: View {
     let inputReferenceNumber: String
-    var onDetailsFetched: ((String, String, String) -> Void)? // Modify this line
+    var onDetailsFetched: ((String, String, String, Bool) -> Void)?
     
     @State private var isLoading = true
     @State private var showingDetailedInfoModal = false
@@ -111,7 +111,8 @@ struct TrackingView: View {
         .onDisappear {
             if let onDetailsFetched = onDetailsFetched {
                 let latestEventDescription = shipmentEvents.first?.eventDescription ?? "No events"
-                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription)
+                let requestStatus = !shipmentEvents.isEmpty 
+                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription, requestStatus)
             }
         }
     }
