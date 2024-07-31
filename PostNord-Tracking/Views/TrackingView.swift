@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TrackingView: View {
     let inputReferenceNumber: String
+    var onDetailsFetched: ((String, String, String) -> Void)? // Modify this line
     
     @State private var isLoading = true
     @State private var showingDetailedInfoModal = false
@@ -105,6 +106,12 @@ struct TrackingView: View {
                 receiverAddress: receiverAddress,
                 collectionMethod: collectionMethod
             )
+        }
+        .onDisappear {
+            if let onDetailsFetched = onDetailsFetched {
+                let latestEventDescription = shipmentEvents.first?.eventDescription ?? "No events"
+                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription)
+            }
         }
     }
     
