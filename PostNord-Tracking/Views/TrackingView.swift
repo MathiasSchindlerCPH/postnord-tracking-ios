@@ -1,10 +1,3 @@
-//
-//  TrackingView.swift
-//  PostNordTracking
-//
-//  Created by Mathias Schindler on 27/06/2024.
-//
-
 import SwiftUI
 
 struct TrackingView: View {
@@ -54,7 +47,7 @@ struct TrackingView: View {
                                 Image(systemName: "info.circle")
                                     .font(.system(size: 20))
                                     .foregroundColor(.blue)
-                                    .padding(.trailing, 5) 
+                                    .padding(.trailing, 5)
                             }
 
                         }
@@ -78,6 +71,9 @@ struct TrackingView: View {
                     }
                     .padding()
                 }
+                .refreshable {
+                    await fetchShipmentDetails()
+                }
             } else {
                 VStack {
                     Text(String(format: NSLocalizedString("noShipmentDataFoundMessage", comment: "No shipment data found for tracking ID\n"), inputReferenceNumber))
@@ -90,26 +86,8 @@ struct TrackingView: View {
         .navigationTitle(NSLocalizedString("trackingDetailsTitle", comment: "Tracking Details"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            let languageCode = selectedLanguageCode
-            
-            APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
-                switch result {
-                case .success(let (statusSummary, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
-                    DispatchQueue.main.async {
-                        self.collectionMethod = collectionMethod
-                        self.receiverAddress = receiverAddress
-                        self.shipmentWeight = shipmentWeight
-                        self.statusSummary = statusSummary
-                        self.senderName = senderName
-                        self.shipmentEvents = events
-                        self.isLoading = false
-                    }
-                case .failure(_):
-                    DispatchQueue.main.async {
-                        self.shipmentEvents = []
-                        self.isLoading = false
-                    }
-                }
+            Task {
+                await fetchShipmentDetails()
             }
         }
         .sheet(isPresented: $showingDetailedInfoModal) {
@@ -120,6 +98,30 @@ struct TrackingView: View {
                 receiverAddress: receiverAddress,
                 collectionMethod: collectionMethod
             )
+        }
+    }
+    
+    private func fetchShipmentDetails() async {
+        let languageCode = selectedLanguageCode
+                    
+        APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
+            switch result {
+            case .success(let (statusSummary, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
+                DispatchQueue.main.async {
+                    self.collectionMethod = collectionMethod
+                    self.receiverAddress = receiverAddress
+                    self.shipmentWeight = shipmentWeight
+                    self.statusSummary = statusSummary
+                    self.senderName = senderName
+                    self.shipmentEvents = events
+                    self.isLoading = false
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.shipmentEvents = []
+                    self.isLoading = false
+                }
+            }
         }
     }
 }
