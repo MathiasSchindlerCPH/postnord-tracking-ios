@@ -15,7 +15,7 @@ struct DetailedInfoModalView: View {
     var shipmentWeight: String
     var receiverAddress: String
     var collectionMethod: String
-    var inputReferenceNumber: String // New property to store the reference number
+    var inputReferenceNumber: String 
     
     var body: some View {
         NavigationView {

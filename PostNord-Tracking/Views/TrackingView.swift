@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrackingView: View {
     let inputReferenceNumber: String
-    var onDetailsFetched: ((String, String, String) -> Void)? // Modify this line
+    var onDetailsFetched: ((String, String, String, Bool, String) -> Void)?
     
     @State private var isLoading = true
     @State private var showingDetailedInfoModal = false
@@ -18,6 +18,7 @@ struct TrackingView: View {
     @State private var errorMessage: String?
     
     @State private var statusSummary: String = ""
+    @State private var statusShort: String = ""
     @State private var senderName: String = ""
     @State private var receiverAddress: String = ""
     @State private var collectionMethod: String = ""
@@ -45,9 +46,14 @@ struct TrackingView: View {
                 ScrollView {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(String(format: NSLocalizedString("shipmentDetailsFor", comment: "Shipment details for "), inputReferenceNumber))
-                                .font(.headline)
-                                .padding(.bottom, 8)
+                            Image(systemName: statusShort.capitalized == "Delivered" ? "checkmark.circle" : "truck.box")
+                                .font(.system(size: 20))
+                                .foregroundColor(statusShort.capitalized == "Delivered" ? .blue : .blue)
+                                .padding(.trailing, 5)
+                            
+                            Text(statusSummary)
+                                .font(.subheadline)
+                            
                             Spacer()
                             Button(action: {
                                 showingDetailedInfoModal.toggle()
@@ -111,7 +117,8 @@ struct TrackingView: View {
         .onDisappear {
             if let onDetailsFetched = onDetailsFetched {
                 let latestEventDescription = shipmentEvents.first?.eventDescription ?? "No events"
-                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription)
+                let requestStatus = !shipmentEvents.isEmpty 
+                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription, requestStatus, statusShort)
             }
         }
     }
@@ -121,13 +128,14 @@ struct TrackingView: View {
                     
         APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
             switch result {
-            case .success(let (statusSummary, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
+            case .success(let (statusSummary, statusShort, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
                 DispatchQueue.main.async {
-                    self.collectionMethod = collectionMethod
-                    self.receiverAddress = receiverAddress
-                    self.shipmentWeight = shipmentWeight
                     self.statusSummary = statusSummary
+                    self.statusShort = statusShort
+                    self.shipmentWeight = shipmentWeight
                     self.senderName = senderName
+                    self.receiverAddress = receiverAddress
+                    self.collectionMethod = collectionMethod
                     self.shipmentEvents = events
                     self.isLoading = false
                 }

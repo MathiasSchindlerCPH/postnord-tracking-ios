@@ -57,31 +57,42 @@ struct HomeView: View {
                     // Recent Searches List
                     if !recentSearches.isEmpty {
                         VStack(alignment: .leading) {
-                            Text(NSLocalizedString("recentSearchesTitle", comment: "Recent Searches"))
+                            /*Text(NSLocalizedString("recentSearchesTitle", comment: "Recent Searches"))
                                 .font(.headline)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.gray)*/
                             
                             ScrollView {
                                 ForEach(recentSearches.indices.reversed(), id: \.self) { index in
                                     if let parcelId = recentSearches[index]["parcelId"] as? String,
                                        let senderName = recentSearches[index]["senderName"] as? String,
-                                       let eventDescription = recentSearches[index]["eventDescription"] as? String {
+                                       let eventDescription = recentSearches[index]["eventDescription"] as? String,
+                                       let statusShort = recentSearches[index]["statusShort"] as? String {
                                         
                                         Button(action: {
                                             tappedRecentSearchId = parcelId
                                             navigateToTrackingView(search: tappedRecentSearchId)
                                         }) {
-                                            VStack(alignment: .leading) {
-                                                Text(senderName) // Display senderName instead of parcelId
-                                                    .padding(.top, 6)
-                                                    .padding(.bottom, 2)
-                                                Text(eventDescription)
-                                                    .font(.subheadline)
-                                                    .foregroundColor(.gray)
-                                                    .padding(.bottom, 6)
-                                                Divider()
+                                            HStack {
+                                                Image(systemName: statusShort.capitalized == "Delivered" ? "checkmark.circle" : "truck.box")
+                                                    .resizable()
+                                                    .frame(width: 24, height: 24)
+                                                    .foregroundColor(statusShort.capitalized == "Delivered" ? .blue : .blue)
+                                                    .padding(.trailing, 8)
+                                             
+                                                VStack(alignment: .leading) {
+                                                    Text(senderName) // Display senderName instead of parcelId
+                                                        .padding(.top, 6)
+                                                        .padding(.bottom, 2)
+                                                    Text(eventDescription)
+                                                        .font(.subheadline)
+                                                        .foregroundColor(.gray)
+                                                        .lineLimit(1) // Set line limit to 1 for truncation
+                                                        .truncationMode(.tail) // Use tail truncation mode to show ellipsis
+                                                        .padding(.bottom, 6)
+                                                    Divider()
+                                                }
+                                                .contentShape(Rectangle()) // To make entire row tappable, not just text within
                                             }
-                                            .contentShape(Rectangle()) // To make entire row tappable, not just text within
                                         }
                                         .buttonStyle(PlainButtonStyle())
                                     }
@@ -120,8 +131,13 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle(NSLocalizedString("postTrackingTitle", comment: ""))
                 .navigationDestination(for: String.self) { trackingId in
-                    TrackingView(inputReferenceNumber: trackingId) { searchId, senderName, latestEventDescription in
-                        saveRecentSearch(searchId: searchId, senderName: senderName, latestEventDescription: latestEventDescription)
+                    TrackingView(inputReferenceNumber: trackingId) { searchId, senderName, latestEventDescription, isRequestSuccessful, statusShort in
+                        if isRequestSuccessful {
+                            saveRecentSearch(searchId: searchId, 
+                                             senderName: senderName,
+                                             latestEventDescription: latestEventDescription,
+                                             statusShort: statusShort)
+                        }
                         manualSearchId = ""
                         trackingViewSearchId = ""
                     }
@@ -158,24 +174,29 @@ struct HomeView: View {
         navigationPath.append(trackingViewSearchId)
     }
     
-    private func saveRecentSearch(searchId: String, senderName: String, latestEventDescription: String /*,searchedOn: String*/ ) {
+    private func saveRecentSearch(searchId: String, senderName: String, latestEventDescription: String, statusShort: String) {
         let trimmedSearchId = searchId.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedSearchId.isEmpty else { return }
         
-        let trimmedSenderName = senderName.trimmingCharacters(in: .whitespacesAndNewlines) // Add this line
+        let trimmedSenderName = senderName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedEventDescription = latestEventDescription.trimmingCharacters(in: .whitespacesAndNewlines)
-        /*let searchedOn = Int(Date().timeIntervalSince1970)*/
-        
+        let trimmedStatusShort = statusShort.trimmingCharacters(in: .whitespacesAndNewlines)
+
         // Check if searchId exists in recentSearches and remove if it does (to append at the bottom later)
         if recentSearches.contains(where: { $0["parcelId"] as? String == trimmedSearchId }) {
             recentSearches.removeAll { $0["parcelId"] as? String == trimmedSearchId }
         }
         
         // Save new search to recentSearches
-        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "senderName": trimmedSenderName, "eventDescription": trimmedEventDescription /*,"lastSearchedOn": searchedOn*/ ]
+        let newSearch: [String: Any] = ["parcelId": trimmedSearchId,
+                                        "senderName": trimmedSenderName,
+                                        "eventDescription": trimmedEventDescription,
+                                        "statusShort": trimmedStatusShort] 
         recentSearches.append(newSearch)
         UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
+
+
     
     private func clearRecentSearches() {
         if !recentSearches.isEmpty {
