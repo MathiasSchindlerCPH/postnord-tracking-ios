@@ -78,6 +78,8 @@ struct HomeView: View {
                                                 Text(eventDescription)
                                                     .font(.subheadline)
                                                     .foregroundColor(.gray)
+                                                    .lineLimit(1) // Set line limit to 1 for truncation
+                                                    .truncationMode(.tail) // Use tail truncation mode to show ellipsis
                                                     .padding(.bottom, 6)
                                                 Divider()
                                             }
