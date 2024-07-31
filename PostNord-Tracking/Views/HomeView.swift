@@ -120,8 +120,10 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle(NSLocalizedString("postTrackingTitle", comment: ""))
                 .navigationDestination(for: String.self) { trackingId in
-                    TrackingView(inputReferenceNumber: trackingId) { searchId, senderName, latestEventDescription in
-                        saveRecentSearch(searchId: searchId, senderName: senderName, latestEventDescription: latestEventDescription)
+                    TrackingView(inputReferenceNumber: trackingId) { searchId, senderName, latestEventDescription, isRequestSuccessful in
+                        if isRequestSuccessful {
+                            saveRecentSearch(searchId: searchId, senderName: senderName, latestEventDescription: latestEventDescription)
+                        }
                         manualSearchId = ""
                         trackingViewSearchId = ""
                     }
@@ -158,24 +160,24 @@ struct HomeView: View {
         navigationPath.append(trackingViewSearchId)
     }
     
-    private func saveRecentSearch(searchId: String, senderName: String, latestEventDescription: String /*,searchedOn: String*/ ) {
+    private func saveRecentSearch(searchId: String, senderName: String, latestEventDescription: String ) {
         let trimmedSearchId = searchId.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedSearchId.isEmpty else { return }
         
-        let trimmedSenderName = senderName.trimmingCharacters(in: .whitespacesAndNewlines) // Add this line
+        let trimmedSenderName = senderName.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedEventDescription = latestEventDescription.trimmingCharacters(in: .whitespacesAndNewlines)
-        /*let searchedOn = Int(Date().timeIntervalSince1970)*/
-        
+
         // Check if searchId exists in recentSearches and remove if it does (to append at the bottom later)
         if recentSearches.contains(where: { $0["parcelId"] as? String == trimmedSearchId }) {
             recentSearches.removeAll { $0["parcelId"] as? String == trimmedSearchId }
         }
         
         // Save new search to recentSearches
-        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "senderName": trimmedSenderName, "eventDescription": trimmedEventDescription /*,"lastSearchedOn": searchedOn*/ ]
+        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "senderName": trimmedSenderName, "eventDescription": trimmedEventDescription]
         recentSearches.append(newSearch)
         UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
+
     
     private func clearRecentSearches() {
         if !recentSearches.isEmpty {
