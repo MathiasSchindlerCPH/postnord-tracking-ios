@@ -65,7 +65,6 @@ struct HomeView: View {
                                 ForEach(recentSearches.indices.reversed(), id: \.self) { index in
                                     if let parcelId = recentSearches[index]["parcelId"] as? String,
                                        let senderName = recentSearches[index]["senderName"] as? String,
-                                       //let lastSearchedOn = recentSearches[index]["lastSearchedOn"] as? Int {
                                        let eventDescription = recentSearches[index]["eventDescription"] as? String {
                                         
                                         Button(action: {
@@ -192,11 +191,6 @@ struct HomeView: View {
             }
         }
     }
-    
-    /*private func formatTimestamp(_ timestamp: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        return dateFormatter.string(from: date)
-    }*/
 }
 
 // #Preview { HomeView() }
