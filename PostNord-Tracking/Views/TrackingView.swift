@@ -104,7 +104,8 @@ struct TrackingView: View {
                 senderName: senderName,
                 shipmentWeight: shipmentWeight,
                 receiverAddress: receiverAddress,
-                collectionMethod: collectionMethod
+                collectionMethod: collectionMethod,
+                inputReferenceNumber: inputReferenceNumber // Pass the reference number here
             )
         }
         .onDisappear {
@@ -148,17 +149,20 @@ struct DetailedInfoModalView: View {
     var shipmentWeight: String
     var receiverAddress: String
     var collectionMethod: String
+    var inputReferenceNumber: String // New property to store the reference number
     
     var body: some View {
         NavigationView {
             VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
+                        
                         InfoSection(icon: "info.circle", title: NSLocalizedString("shipmentStatusModal", comment: "Status"), content: statusSummary)
                         InfoSection(icon: "person.fill", title: NSLocalizedString("senderNameModal", comment: "Sender"), content: senderName)
                         InfoSection(icon: "bag", title: NSLocalizedString("collectionMethodModal", comment: "Collection Method"), content: collectionMethod)
                         InfoSection(icon: "house", title: NSLocalizedString("receiverAddressModal", comment: "Receiver Address"), content: receiverAddress)
                         InfoSection(icon: "scalemass", title: NSLocalizedString("shipmentWeightModal", comment: "Weight"), content: shipmentWeight)
+                        InfoSection(icon: "tag", title: NSLocalizedString("shipmentTrackingIdModal", comment: "Status"), content: inputReferenceNumber)
                         
                         Spacer()
                     }
