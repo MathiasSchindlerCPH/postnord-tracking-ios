@@ -25,6 +25,7 @@
 "receiverAddressModal" = "Modtageradresse";
 "shipmentWeightModal" = "Pakkevægt";
 "collectionMethodModal" = "Leveringsform";
+"shipmentTrackingIdModal" = "Tracking ID";
 
 /* SettingsView */
 "settingsSectionTitle" = "Indstillinger";
