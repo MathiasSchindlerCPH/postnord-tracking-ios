@@ -64,17 +64,18 @@ struct HomeView: View {
                             ScrollView {
                                 ForEach(recentSearches.indices.reversed(), id: \.self) { index in
                                     if let parcelId = recentSearches[index]["parcelId"] as? String,
-                                       let lastSearchedOn = recentSearches[index]["lastSearchedOn"] as? Int {
+                                       let senderName = recentSearches[index]["senderName"] as? String,
+                                       let eventDescription = recentSearches[index]["eventDescription"] as? String {
                                         
                                         Button(action: {
                                             tappedRecentSearchId = parcelId
                                             navigateToTrackingView(search: tappedRecentSearchId)
                                         }) {
                                             VStack(alignment: .leading) {
-                                                Text(parcelId)
+                                                Text(senderName) // Display senderName instead of parcelId
                                                     .padding(.top, 6)
                                                     .padding(.bottom, 2)
-                                                Text(formatTimestamp(lastSearchedOn))
+                                                Text(eventDescription)
                                                     .font(.subheadline)
                                                     .foregroundColor(.gray)
                                                     .padding(.bottom, 6)
@@ -119,16 +120,11 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle(NSLocalizedString("postTrackingTitle", comment: ""))
                 .navigationDestination(for: String.self) { trackingId in
-                    //TrackingView(inputReferenceNumber: trackingId, selectedLanguageCode: selectedLanguageCode)
-                    TrackingView(inputReferenceNumber: trackingId)
-                        .onDisappear {
-                            // Only update recent searches after TrackingView closes
-                            saveRecentSearch(searchId: trackingId)
-                            
-                            // Reset manualSearchId and trackingViewSearchId after closing TrackingView
-                            manualSearchId = ""
-                            trackingViewSearchId = ""
-                        }
+                    TrackingView(inputReferenceNumber: trackingId) { searchId, senderName, latestEventDescription in
+                        saveRecentSearch(searchId: searchId, senderName: senderName, latestEventDescription: latestEventDescription)
+                        manualSearchId = ""
+                        trackingViewSearchId = ""
+                    }
                 }
                 .padding()
             }
@@ -162,11 +158,13 @@ struct HomeView: View {
         navigationPath.append(trackingViewSearchId)
     }
     
-    private func saveRecentSearch(searchId: String) {
+    private func saveRecentSearch(searchId: String, senderName: String, latestEventDescription: String /*,searchedOn: String*/ ) {
         let trimmedSearchId = searchId.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedSearchId.isEmpty else { return }
-
-        let searchedOn = Int(Date().timeIntervalSince1970)
+        
+        let trimmedSenderName = senderName.trimmingCharacters(in: .whitespacesAndNewlines) // Add this line
+        let trimmedEventDescription = latestEventDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        /*let searchedOn = Int(Date().timeIntervalSince1970)*/
         
         // Check if searchId exists in recentSearches and remove if it does (to append at the bottom later)
         if recentSearches.contains(where: { $0["parcelId"] as? String == trimmedSearchId }) {
@@ -174,7 +172,7 @@ struct HomeView: View {
         }
         
         // Save new search to recentSearches
-        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "lastSearchedOn": searchedOn]
+        let newSearch: [String: Any] = ["parcelId": trimmedSearchId, "senderName": trimmedSenderName, "eventDescription": trimmedEventDescription /*,"lastSearchedOn": searchedOn*/ ]
         recentSearches.append(newSearch)
         UserDefaults.standard.set(recentSearches, forKey: "RecentSearches")
     }
@@ -192,11 +190,6 @@ struct HomeView: View {
                 }
             }
         }
-    }
-    
-    private func formatTimestamp(_ timestamp: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        return dateFormatter.string(from: date)
     }
 }
 

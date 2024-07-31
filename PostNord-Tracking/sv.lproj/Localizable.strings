@@ -25,6 +25,7 @@
 "receiverAddressModal" = "Mottagaradress";
 "shipmentWeightModal" = "Paketvikt";
 "collectionMethodModal" = "Leveransmetod";
+"shipmentTrackingIdModal" = "Tracking ID";
 
 /* SettingsView */
 "settingsSectionTitle" = "Inställningar";

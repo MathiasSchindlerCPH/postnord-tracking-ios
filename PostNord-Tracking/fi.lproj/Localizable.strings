@@ -25,6 +25,7 @@
 "receiverAddressModal" = "Vastaanottajan osoite";
 "shipmentWeightModal" = "Paketin paino";
 "collectionMethodModal" = "Toimitustapa";
+"shipmentTrackingIdModal" = "Tracking ID";
 
 /* SettingsView */
 "settingsSectionTitle" = "Asetukset";

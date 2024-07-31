@@ -25,6 +25,7 @@
 "receiverAddressModal" = "Destination Address";
 "shipmentWeightModal" = "Parcel Weight";
 "collectionMethodModal" = "Collection Method";
+"shipmentTrackingIdModal" = "Tracking ID";
 
 /* SettingsView */
 "settingsSectionTitle" = "Settings";

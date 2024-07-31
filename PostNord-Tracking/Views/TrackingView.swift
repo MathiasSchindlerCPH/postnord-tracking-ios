@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TrackingView: View {
     let inputReferenceNumber: String
+    var onDetailsFetched: ((String, String, String) -> Void)? // Modify this line
     
     @State private var isLoading = true
     @State private var showingDetailedInfoModal = false
@@ -54,7 +55,7 @@ struct TrackingView: View {
                                 Image(systemName: "info.circle")
                                     .font(.system(size: 20))
                                     .foregroundColor(.blue)
-                                    .padding(.trailing, 5) 
+                                    .padding(.trailing, 5)
                             }
 
                         }
@@ -78,6 +79,9 @@ struct TrackingView: View {
                     }
                     .padding()
                 }
+                .refreshable {
+                    await fetchShipmentDetails()
+                }
             } else {
                 VStack {
                     Text(String(format: NSLocalizedString("noShipmentDataFoundMessage", comment: "No shipment data found for tracking ID\n"), inputReferenceNumber))
@@ -90,26 +94,8 @@ struct TrackingView: View {
         .navigationTitle(NSLocalizedString("trackingDetailsTitle", comment: "Tracking Details"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            let languageCode = selectedLanguageCode
-            
-            APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
-                switch result {
-                case .success(let (statusSummary, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
-                    DispatchQueue.main.async {
-                        self.collectionMethod = collectionMethod
-                        self.receiverAddress = receiverAddress
-                        self.shipmentWeight = shipmentWeight
-                        self.statusSummary = statusSummary
-                        self.senderName = senderName
-                        self.shipmentEvents = events
-                        self.isLoading = false
-                    }
-                case .failure(_):
-                    DispatchQueue.main.async {
-                        self.shipmentEvents = []
-                        self.isLoading = false
-                    }
-                }
+            Task {
+                await fetchShipmentDetails()
             }
         }
         .sheet(isPresented: $showingDetailedInfoModal) {
@@ -118,8 +104,39 @@ struct TrackingView: View {
                 senderName: senderName,
                 shipmentWeight: shipmentWeight,
                 receiverAddress: receiverAddress,
-                collectionMethod: collectionMethod
+                collectionMethod: collectionMethod,
+                inputReferenceNumber: inputReferenceNumber // Pass the reference number here
             )
+        }
+        .onDisappear {
+            if let onDetailsFetched = onDetailsFetched {
+                let latestEventDescription = shipmentEvents.first?.eventDescription ?? "No events"
+                onDetailsFetched(inputReferenceNumber, senderName, latestEventDescription)
+            }
+        }
+    }
+    
+    private func fetchShipmentDetails() async {
+        let languageCode = selectedLanguageCode
+                    
+        APIManager.fetchShipmentDetails(for: inputReferenceNumber, locale: languageCode) { result in
+            switch result {
+            case .success(let (statusSummary, shipmentWeight, senderName, receiverAddress, collectionMethod, events)):
+                DispatchQueue.main.async {
+                    self.collectionMethod = collectionMethod
+                    self.receiverAddress = receiverAddress
+                    self.shipmentWeight = shipmentWeight
+                    self.statusSummary = statusSummary
+                    self.senderName = senderName
+                    self.shipmentEvents = events
+                    self.isLoading = false
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.shipmentEvents = []
+                    self.isLoading = false
+                }
+            }
         }
     }
 }
@@ -132,17 +149,20 @@ struct DetailedInfoModalView: View {
     var shipmentWeight: String
     var receiverAddress: String
     var collectionMethod: String
+    var inputReferenceNumber: String // New property to store the reference number
     
     var body: some View {
         NavigationView {
             VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
+                        
                         InfoSection(icon: "info.circle", title: NSLocalizedString("shipmentStatusModal", comment: "Status"), content: statusSummary)
                         InfoSection(icon: "person.fill", title: NSLocalizedString("senderNameModal", comment: "Sender"), content: senderName)
                         InfoSection(icon: "bag", title: NSLocalizedString("collectionMethodModal", comment: "Collection Method"), content: collectionMethod)
                         InfoSection(icon: "house", title: NSLocalizedString("receiverAddressModal", comment: "Receiver Address"), content: receiverAddress)
                         InfoSection(icon: "scalemass", title: NSLocalizedString("shipmentWeightModal", comment: "Weight"), content: shipmentWeight)
+                        InfoSection(icon: "tag", title: NSLocalizedString("shipmentTrackingIdModal", comment: "Status"), content: inputReferenceNumber)
                         
                         Spacer()
                     }
