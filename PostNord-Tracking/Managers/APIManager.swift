@@ -6,6 +6,7 @@ struct TrackingInformationResponse: Codable {
 
 struct Shipment: Codable {
     let shipmentId: String?
+    let status: String?
     let items: [Item]?
     let statusText: StatusText?
     let consignor: Consignor?
@@ -93,7 +94,7 @@ struct ShipmentEvent: Identifiable {
 
 
 class APIManager {
-    static func fetchShipmentDetails(for id: String, locale: String, completion: @escaping (Result<(statusSummary: String, shipmentWeight: String, senderName: String, receiverAddress: String, collectionMethod: String, events: [ShipmentEvent]), Error>) -> Void) {
+    static func fetchShipmentDetails(for id: String, locale: String, completion: @escaping (Result<(statusSummary: String, statusShort: String, shipmentWeight: String, senderName: String, receiverAddress: String, collectionMethod: String, events: [ShipmentEvent]), Error>) -> Void) {
         let apiKey = "b5dbbd1173510f2d9cad0f9f280ab330"
         let baseURL = "https://api2.postnord.com/rest/shipment/v5/trackandtrace/findByIdentifier.json"
         
@@ -123,6 +124,7 @@ class APIManager {
                    let events = item.events {
                     
                     let statusSummary = shipment.statusText?.header ?? "Unknown status"
+                    let statusShort = shipment.status ?? "Unknown status"
                     let senderName = shipment.consignor?.name ?? "Unknown sender"
                     let collectionMethod = shipment.service?.name ?? "Unknown collection method"
                     let receiverCity = shipment.consignee?.address?.city ?? "Unknown city"
@@ -155,7 +157,7 @@ class APIManager {
                     }
                     shipmentEvents.reverse()
                     
-                    completion(.success((statusSummary: statusSummary, shipmentWeight: shipmentWeight, senderName: senderName, receiverAddress: receiverAddress, collectionMethod: collectionMethod, events: shipmentEvents)))
+                    completion(.success((statusSummary: statusSummary, statusShort: statusShort, shipmentWeight: shipmentWeight, senderName: senderName, receiverAddress: receiverAddress, collectionMethod: collectionMethod, events: shipmentEvents)))
                 } else {
                     completion(.failure(NSError(domain: "No shipments found", code: 1, userInfo: nil)))
                 }
